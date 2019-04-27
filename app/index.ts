@@ -2,8 +2,8 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 import * as templates from './templates.ts';
 
+// list users
 const listUsers = users => {
-  // load users
   const mainElement = document.body.querySelector('.app-main');
   mainElement.innerHTML = templates.listUsers({users});
 
@@ -15,16 +15,45 @@ const listUsers = users => {
       deleteUser(deleteButton.getAttribute('data-user-id'));
     });
   }
-}
+};
 
 // delete user by id
-const deleteUser = async (userId) => {
+const deleteUser = async userId => {
   try {
-    console.log('usuario foi deletado!');
+    showAlert('usuario foi deletado!', 'success');
   } catch (err) {
     showAlert(err);
   }
-}
+};
+
+// editar user by id
+const editUser = user => {
+  try {
+    const mainElement = document.body.querySelector('.app-main');
+    mainElement.innerHTML = templates.editUser(user);
+
+    const form = mainElement.querySelector('form');
+    // const input = form.querySelector('input');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      await updateUser({});
+    });
+
+  } catch (err) {
+    showAlert(err);
+  }
+};
+
+// update user
+const updateUser = async user => {
+  try {
+    showAlert('usuario foi atualizado!', 'success');
+  } catch (err) {
+    showAlert(err);
+  }
+};
 
 // show alert message
 const showAlert = (message, type = 'danger') => {
@@ -33,26 +62,36 @@ const showAlert = (message, type = 'danger') => {
   alertsElement.insertAdjacentHTML('beforeend', html);
 };
 
-
 //Use Window location hash to show the specified view.
 const showView = async () => {
   const mainElement = document.body.querySelector('.app-main');
   const [view, ...params] = window.location.hash.split('/');
 
   switch (view) {
-    case '#welcome':
-      mainElement.innerHTML = templates.welcome();
+    case '#login':
+      // wait getSession(user);
+      mainElement.innerHTML = templates.login();
       break;
     case '#users':
       try {
-        listUsers([
-          { "id": "1", "first_name": "morpheus", "last_name": "zion" },
-          { "id": "2", "first_name": "matheus", "last_name": "jardim" },
-          { "id": "3", "first_name": "lucas", "last_name": "montreal" }
-        ])
+        // edit user || list user
+        if (params[0]) {
+          // const user = await getUser(params[0]);
+          editUser(
+            { "id": "1", "first_name": "morpheus", "last_name": "zion" }
+          );
+
+        } else {
+          // const users = await getUsers();
+          listUsers([
+            { "id": "1", "first_name": "morpheus", "last_name": "zion" },
+            { "id": "2", "first_name": "matheus", "last_name": "jardim" },
+            { "id": "3", "first_name": "lucas", "last_name": "montreal" }
+          ]);
+        }
       } catch (err) {
         showAlert(err);
-        window.location.hash = '#welcome';
+        window.location.hash = '#login';
       }
       break;
     default:
@@ -64,5 +103,5 @@ const showView = async () => {
 (async () => {
   document.body.innerHTML = templates.main();
   window.addEventListener('hashchange', showView);
-  showView().catch(err => window.location.hash = '#welcome');
+  showView().catch(err => window.location.hash = '#login');
 })();

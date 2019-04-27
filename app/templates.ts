@@ -12,7 +12,7 @@ export const main = Handlebars.compile(`
   </div>
 `);
 
-export const welcome = Handlebars.compile(`
+export const login = Handlebars.compile(`
   <div class="container">
     <div class="row mt-5">
       <div class="col-sm-3 col-md-3 col-lg-4"></div>
@@ -23,21 +23,21 @@ export const welcome = Handlebars.compile(`
           </div>
           <div class="card-body">
 
-          <form>
-            <div class="form-group">
-              <label for="login">Login</label>
-              <input type="text" class="form-control" placeholder="Digite seu login">
-            </div>
-            <div class="form-group">
-              <label for="senha">Senha</label>
-              <input type="password" class="form-control" placeholder="Digite sua senha">
-            </div>
-            <div class="form-check mb-3">
-              <input type="checkbox" class="form-check-input">
-              <label class="form-check-label" for="lembreme">Lembre-me</label>
-            </div>
-            <button type="submit" class="btn btn-success btn-md btn-block">Submit</button>
-          </form>
+            <form>
+              <div class="form-group">
+                <label for="login">Login</label>
+                <input type="text" class="form-control" placeholder="Digite seu login">
+              </div>
+              <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" class="form-control" placeholder="Digite sua senha">
+              </div>
+              <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input">
+                <label class="form-check-label" for="lembreme">Lembre-me</label>
+              </div>
+              <button type="submit" class="btn btn-success btn-md btn-block">Entrar</button>
+            </form>
 
           </div>
         </div>
@@ -82,6 +82,37 @@ export const listUsers = Handlebars.compile(`
   </div>
 `);
 
+export const editUser = Handlebars.compile(`
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-sm-2 col-md-2 col-lg-3"></div>
+      <div class="col-sm-8 col-md-8 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            Editar Usuário
+          </div>
+          <div class="card-body">
+
+            <form>
+              <input type="hidden" id="userId" name="userId" value="{{id}}">
+              <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" value="{{first_name}}">
+              </div>
+              <div class="form-group">
+                <label for="sobrenome">Sobrenome</label>
+                <input type="text" class="form-control" value="{{last_name}}">
+              </div>
+              <button type="submit" class="btn btn-success btn-md btn-block">Salvar</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2 col-md-2 col-lg-2"></div>
+    </div>
+  </div>
+`);
 
 export const alert = Handlebars.compile(`
   <div class="alert alert-{{type}} alert-dismissible" role="alert">
