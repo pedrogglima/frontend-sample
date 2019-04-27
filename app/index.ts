@@ -95,6 +95,7 @@ const showView = async () => {
       }
       break;
     default:
+      document.body.innerHTML = templates.notFound();
       throw Error(`Error 404: ${view}`);
   }
 };

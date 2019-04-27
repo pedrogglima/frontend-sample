@@ -12,6 +12,14 @@ export const main = Handlebars.compile(`
   </div>
 `);
 
+export const notFound = Handlebars.compile(`
+  <div class="container-fluid">
+    <div class="row">
+      <h1>Error 404 - Page Not Found</h1>
+    </div>
+  </div>
+`);
+
 export const login = Handlebars.compile(`
   <div class="container">
     <div class="row mt-5">
