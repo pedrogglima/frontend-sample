@@ -55,6 +55,12 @@ const updateUser = async user => {
   }
 };
 
+const home = () => {
+  const mainElement = document.body.querySelector('.app-main');
+  mainElement.innerHTML = templates.login();
+};
+
+
 // show alert message
 const showAlert = (message, type = 'danger') => {
   const alertsElement = document.body.querySelector('.app-alerts');
@@ -62,15 +68,28 @@ const showAlert = (message, type = 'danger') => {
   alertsElement.insertAdjacentHTML('beforeend', html);
 };
 
+// check for root path
+const extractPath = path => {
+  if (path.length) {
+    if (path == '#/') {
+      return new Array(path);
+    } else {
+      return path.split('/');
+    }
+  }
+}
+
 //Use Window location hash to show the specified view.
 const showView = async () => {
-  const mainElement = document.body.querySelector('.app-main');
-  const [view, ...params] = window.location.hash.split('/');
+  document.body.innerHTML = templates.main();
+  const [view, ...params] = extractPath(window.location.hash);
 
   switch (view) {
+    case '#/':
+      home();
+      break;
     case '#login':
-      // wait getSession(user);
-      mainElement.innerHTML = templates.login();
+      home();
       break;
     case '#users':
       try {
