@@ -13,7 +13,6 @@ alertsElement.innerHTML = templates.alert({
   message: 'Setup inicial funcionando!',
 });
 
-
 /**
 * Use Window location hash to show the specified view.
 */
