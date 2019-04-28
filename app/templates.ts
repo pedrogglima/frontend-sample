@@ -121,14 +121,14 @@ export const editUser = Handlebars.compile(`
           <div class="card-body">
 
             <form>
-              <input type="hidden" id="userId" name="userId" value="{{id}}">
+              <input type="hidden" id="user_id" name="userId" value="{{data.id}}">
               <div class="form-group">
                 <label for="nome">Nome</label>
-                <input type="text" class="form-control" value="{{first_name}}">
+                <input type="text" id="user_nome" class="form-control" value="{{data.first_name}}">
               </div>
               <div class="form-group">
                 <label for="sobrenome">Sobrenome</label>
-                <input type="text" class="form-control" value="{{last_name}}">
+                <input type="text" id="user_sobrenome" class="form-control" value="{{data.last_name}}">
               </div>
               <button type="submit" class="btn btn-success btn-md btn-block">Salvar</button>
             </form>

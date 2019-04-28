@@ -5,7 +5,7 @@ import * as templates from './templates.ts';
 // method to fetch and decode JSON.
 const fetchJSON = async (url, method = 'GET') => {
   try {
-    const response = await fetch(url, {method, credentials: 'omit'});
+    const response = await fetch(url, {method, credentials: 'omit' });
     return response.json();
   } catch (error) {
     return {error};
@@ -14,7 +14,6 @@ const fetchJSON = async (url, method = 'GET') => {
 
 // list users
 const listUsers = users => {
-  // console.log(`users: ${JSON.stringify(users)}`);
   const mainElement = document.body.querySelector('.app-main');
   const url = "#users?page="
   mainElement.innerHTML = templates.listUsers({users, url});
@@ -31,12 +30,12 @@ const listUsers = users => {
 
 // get users
 const getUsers = async (pageNumber = '1') => {
-  const users = await fetchJSON(`https://reqres.in/api/users?page=${pageNumber}`);
-  console.log(users);
-  if (users.error) {
-    throw users.error;
+  const respUsers = await fetchJSON(`https://reqres.in/api/users?page=${pageNumber}`);
+
+  if (respUsers.error) {
+    throw respUsers.error;
   }
-  return users;
+  return respUsers;
 };
 
 // delete user by id
@@ -55,12 +54,14 @@ const editUser = user => {
     mainElement.innerHTML = templates.editUser(user);
 
     const form = mainElement.querySelector('form');
-    // const input = form.querySelector('input');
-
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
-      await updateUser({});
+      const user_id = (<HTMLInputElement> form.querySelector('#user_id')).value;
+      const user_nome = (<HTMLInputElement> form.querySelector('#user_nome')).value;
+      const user_sobrenome = (<HTMLInputElement> form.querySelector('#user_sobrenome')).value;
+
+      await updateUser(user_id, user_nome, user_sobrenome);
     });
 
   } catch (err) {
@@ -68,9 +69,36 @@ const editUser = user => {
   }
 };
 
-// update user
-const updateUser = async user => {
+// get user by id
+const getUser = async id => {
   try {
+    const respUser = await fetchJSON(`https://reqres.in/api/users/${id}`);
+
+    if (Object.keys(respUser).length === 0) {
+      throw 'usuário não foi encontrado';
+    }
+    return respUser;
+  } catch (err) {
+    showAlert(err);
+  }
+};
+
+// update user
+const updateUser = async (id, nome, sobrenome) => {
+  try {
+    const url = `https://reqres.in/api/users/${id}`;
+
+    const resqBody = JSON.stringify({
+      "first_name": nome,
+      "last_name": sobrenome
+    });
+
+    const respUser = await fetch(url, {method: 'PUT', body: resqBody});
+
+    if (respUser.status !== 200) {
+      throw 'não foi possível atualizar o usuário';
+    }
+
     showAlert('usuario foi atualizado!', 'success');
   } catch (err) {
     showAlert(err);
@@ -120,7 +148,7 @@ const extractPath = path => {
     const [view_w_qrys, querys] = view.split('?');
 
     if (querys) {
-      const [query, ...rest] = querys.split('&');
+      const [query, ...remaining] = querys.split('&');
       const [key, value, ...trash] = query.split('=');
 
       if (key && value) {
@@ -139,7 +167,7 @@ const extractPath = path => {
 const showView = async () => {
   document.body.innerHTML = templates.main();
   const objPath = extractPath(window.location.hash);
-  
+
   switch (objPath.view) {
     case '#/':
       home();
@@ -151,10 +179,9 @@ const showView = async () => {
       try {
         // edit user || list users
         if (objPath.id) {
-          // const user = await getUser(objPath.id);
-          editUser(
-            { "id": "1", "first_name": "morpheus", "last_name": "zion" }
-          );
+          const user = await getUser(objPath.id);
+          // redirecionar caso getUser fail
+          editUser(user);
 
         } else {
           let users = '';
