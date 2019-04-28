@@ -1,4 +1,4 @@
-import * as Handlebars from '../node_modules/handlebars/dist/handlebars.js';
+import * as Handlebars from '../../node_modules/handlebars/dist/handlebars.js';
 
 // handle paginatons for simple cases (few pages, etc.)
 Handlebars.registerHelper('paginator', (from, to, url, block) => {
@@ -12,26 +12,6 @@ Handlebars.registerHelper('paginator', (from, to, url, block) => {
     }
     return accum;
 });
-
-export const main = Handlebars.compile(`
-  <div class="container">
-    <nav class="navbar navbar-light bg-light mb-3">
-      <a class="navbar-brand" href="#">
-        Frontend
-      </a>
-    </nav>
-    <div class="app-alerts"></div>
-    <div class="app-main"></div>
-  </div>
-`);
-
-export const notFound = Handlebars.compile(`
-  <div class="container-fluid">
-    <div class="row">
-      <h1>Error 404 - Page Not Found</h1>
-    </div>
-  </div>
-`);
 
 export const login = Handlebars.compile(`
   <div class="container">
@@ -68,7 +48,7 @@ export const login = Handlebars.compile(`
   </div>
 `);
 
-export const listUsers = Handlebars.compile(`
+export const list = Handlebars.compile(`
   <div class="container">
     <div class="row mt-5">
       <div class="col-sm-1 col-md-1 col-lg-1"></div>
@@ -109,7 +89,7 @@ export const listUsers = Handlebars.compile(`
   </div>
 `);
 
-export const editUser = Handlebars.compile(`
+export const edit = Handlebars.compile(`
   <div class="container">
     <div class="row mt-5">
       <div class="col-sm-2 col-md-2 col-lg-3"></div>
@@ -121,14 +101,14 @@ export const editUser = Handlebars.compile(`
           <div class="card-body">
 
             <form>
-              <input type="hidden" id="user_id" name="userId" value="{{data.id}}">
+              <input type="hidden" id="user_id" name="userId" value="{{user.id}}">
               <div class="form-group">
                 <label for="nome">Nome</label>
-                <input type="text" id="user_nome" class="form-control" value="{{data.first_name}}">
+                <input type="text" id="user_nome" class="form-control" value="{{user.first_name}}">
               </div>
               <div class="form-group">
                 <label for="sobrenome">Sobrenome</label>
-                <input type="text" id="user_sobrenome" class="form-control" value="{{data.last_name}}">
+                <input type="text" id="user_sobrenome" class="form-control" value="{{user.last_name}}">
               </div>
               <button type="submit" class="btn btn-success btn-md btn-block">Salvar</button>
             </form>
@@ -138,14 +118,5 @@ export const editUser = Handlebars.compile(`
       </div>
       <div class="col-sm-2 col-md-2 col-lg-2"></div>
     </div>
-  </div>
-`);
-
-export const alert = Handlebars.compile(`
-  <div class="alert alert-{{type}} alert-dismissible" role="alert">
-    <button class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    {{message}}
   </div>
 `);
