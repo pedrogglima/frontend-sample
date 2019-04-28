@@ -2,10 +2,22 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 import * as templates from './templates.ts';
 
+// method to fetch and decode JSON.
+const fetchJSON = async (url, method = 'GET') => {
+  try {
+    const response = await fetch(url, {method, credentials: 'omit'});
+    return response.json();
+  } catch (error) {
+    return {error};
+  }
+};
+
 // list users
 const listUsers = users => {
+  // console.log(`users: ${JSON.stringify(users)}`);
   const mainElement = document.body.querySelector('.app-main');
-  mainElement.innerHTML = templates.listUsers({users});
+  const url = "#users?page="
+  mainElement.innerHTML = templates.listUsers({users, url});
 
   // add delete event on buttons
   const deleteButtons = mainElement.querySelectorAll('button.delete');
@@ -15,6 +27,16 @@ const listUsers = users => {
       deleteUser(deleteButton.getAttribute('data-user-id'));
     });
   }
+};
+
+// get users
+const getUsers = async (pageNumber = '1') => {
+  const users = await fetchJSON(`https://reqres.in/api/users?page=${pageNumber}`);
+  console.log(users);
+  if (users.error) {
+    throw users.error;
+  }
+  return users;
 };
 
 // delete user by id
@@ -68,23 +90,57 @@ const showAlert = (message, type = 'danger') => {
   alertsElement.insertAdjacentHTML('beforeend', html);
 };
 
-// check for root path
+
+// extract path (extract data from window.location.hash)
+// case root: #/ (valid)
+// case 0: #users (valid)
+// case 1: #users/:id (valid)
+// case 2: #users?page=1 (valid)
+// case 3: #users?page=1&bar=foo (invalid)
+// case 4: # (invalid)
+// case 5: #users?page=1/foo (invalid)
+// case 6: #users/foo/bar?page=1 (invalid)
+// case 7: #users/:id/user (invalid)
+
 const extractPath = path => {
-  if (path.length) {
+  if (path) {
+    // for case root
     if (path == '#/') {
-      return new Array(path);
-    } else {
-      return path.split('/');
+      return { view: path };
     }
+
+    // for case 1
+    const [view, id, ...trash] = path.split('/');
+
+    if (id) {
+      return { view: view, id: id };
+    }
+
+    // for case 2
+    const [view_w_qrys, querys] = view.split('?');
+
+    if (querys) {
+      const [query, ...rest] = querys.split('&');
+      const [key, value, ...trash] = query.split('=');
+
+      if (key && value) {
+        return { view: view_w_qrys, key: key, value: value };
+      }
+    }
+
+    // solve case 0
+    return { view: view_w_qrys };
+
   }
+  return { statusCode: '404', error: 'invalid url' };
 }
 
 //Use Window location hash to show the specified view.
 const showView = async () => {
   document.body.innerHTML = templates.main();
-  const [view, ...params] = extractPath(window.location.hash);
-
-  switch (view) {
+  const objPath = extractPath(window.location.hash);
+  
+  switch (objPath.view) {
     case '#/':
       home();
       break;
@@ -93,29 +149,33 @@ const showView = async () => {
       break;
     case '#users':
       try {
-        // edit user || list user
-        if (params[0]) {
-          // const user = await getUser(params[0]);
+        // edit user || list users
+        if (objPath.id) {
+          // const user = await getUser(objPath.id);
           editUser(
             { "id": "1", "first_name": "morpheus", "last_name": "zion" }
           );
 
         } else {
-          // const users = await getUsers();
-          listUsers([
-            { "id": "1", "first_name": "morpheus", "last_name": "zion" },
-            { "id": "2", "first_name": "matheus", "last_name": "jardim" },
-            { "id": "3", "first_name": "lucas", "last_name": "montreal" }
-          ]);
+          let users = '';
+
+          if (objPath.key && objPath.key == 'page' && objPath.value) {
+            users = await getUsers(objPath.value);
+          } else {
+            users = await getUsers();
+          }
+
+          listUsers(users);
         }
       } catch (err) {
         showAlert(err);
+        console.log(err);
         window.location.hash = '#login';
       }
       break;
     default:
       document.body.innerHTML = templates.notFound();
-      throw Error(`Error 404: ${view}`);
+      throw Error(`status ${objPath.statusCode} - ${objPath.error}`);
   }
 };
 

@@ -1,5 +1,18 @@
 import * as Handlebars from '../node_modules/handlebars/dist/handlebars.js';
 
+// handle paginatons for simple cases (few pages, etc.)
+Handlebars.registerHelper('paginator', (from, to, url, block) => {
+    let accum = '';
+    let pageNumber = '';
+
+    for(let i = from; i <= to; ++i) {
+        pageNumber = block.fn(i).trim();
+        accum += ['<li class="page-item"><a class="page-link" href="', url,
+                    pageNumber, '">', pageNumber, '</a></li>'].join('');
+    }
+    return accum;
+});
+
 export const main = Handlebars.compile(`
   <div class="container">
     <nav class="navbar navbar-light bg-light mb-3">
@@ -62,8 +75,8 @@ export const listUsers = Handlebars.compile(`
       <div class="col-sm-9 col-md-9 col-lg-9">
         <h1>Lista de Usuários</h1>
         <div class="container">
-          {{#if users.length}}
-            {{#each users}}
+          {{#if users.data.length}}
+            {{#each users.data}}
               <hr />
               <div class="row">
                 <ul class="user-info">
@@ -75,12 +88,18 @@ export const listUsers = Handlebars.compile(`
                   </li>
                 </ul>
               </div>
-
             {{/each}}
+
+            <ul class="pagination">
+              {{#paginator 1 users.total_pages url}}
+                {{this}}
+              {{/paginator}}
+            </ul>
+
           {{else}}
             <div class="row">
               <hr />
-              <h4>Não há usuários cadastrados.</h4>
+              <h4>Usuários não encontrados.</h4>
             </div>
           {{/if}}
         </div>
