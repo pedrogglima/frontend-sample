@@ -10,8 +10,10 @@ import 'bootstrap';
 
 import * as User from './model/user.ts';
 import * as Render from './lib/render.ts';
+import * as Fixtures from './test/fixtures.ts';
 import { extractPath } from './lib/router.ts';
 import { showAlert } from './lib/helpers.ts';
+
 
 // page login
 const home = () => {
@@ -22,27 +24,7 @@ const home = () => {
 // page list users
 const listUsers = (users) => {
   const mainElement = document.body.querySelector('.app-main');
-  mainElement.innerHTML = Render.template('users', 'list', {
-    users: [
-         {
-           id: 1,
-           first_name: 'ex1',
-           last_name:  'ex1'
-         },
-         {
-           id: 2,
-           first_name: 'ex2',
-           last_name:  'ex2'
-         },
-         {
-           id: 3,
-           first_name: 'ex3',
-           last_name:  'ex3'
-         }
-    ],
-    total_pages: "4",
-    url: "#users?page="
-  });
+  mainElement.innerHTML = Render.template('users', 'list', users);
 
   // add delete event on buttons
   const deleteButtons = mainElement.querySelectorAll('button.delete');
@@ -74,9 +56,7 @@ const listUsers = (users) => {
 const editUser = user => {
   try {
     const mainElement = document.body.querySelector('.app-main');
-    mainElement.innerHTML = Render.template('users', 'edit', {
-      user: user
-    });
+    mainElement.innerHTML = Render.template('users', 'edit', user);
 
     const form = mainElement.querySelector('form');
     form.addEventListener('submit', async (event) => {
@@ -109,18 +89,21 @@ const showView = async () => {
       try {
         // edit user || list users
         if (objPath.id) {
-          const user = await User.find_by_id(objPath.id);
+          // const user = await User.find_by_id(objPath.id);
+          const user = Fixtures.user();
           // redirecionar caso getUser fail
           editUser(user);
 
         } else {
-          let users = '';
+          // let users = '';
+          const users = Fixtures.users();
 
           if (objPath.key && objPath.key == 'page' && objPath.value) {
             // users = await User.find_by_page(objPath.value);
           } else {
             // users = await User.find_by_page();
           }
+
           listUsers(users);
         }
       } catch (err) {
