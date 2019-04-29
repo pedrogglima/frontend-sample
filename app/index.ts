@@ -1,7 +1,7 @@
 // o que falta fazer nessa pagina
 // - remover imports from style (boostrap)
 // - rever locacao showView
-// - terminar call API (delete and login)
+// - terminar call API (login)
 // - terminar CSS in pages
 // - rever page 404 (replace apenas .app-main)
 
@@ -20,10 +20,27 @@ const home = () => {
 };
 
 // page list users
-const listUsers = users => {
+const listUsers = (users) => {
   const mainElement = document.body.querySelector('.app-main');
   mainElement.innerHTML = Render.template('users', 'list', {
-    users: users,
+    users: [
+         {
+           id: 1,
+           first_name: 'ex1',
+           last_name:  'ex1'
+         },
+         {
+           id: 2,
+           first_name: 'ex2',
+           last_name:  'ex2'
+         },
+         {
+           id: 3,
+           first_name: 'ex3',
+           last_name:  'ex3'
+         }
+    ],
+    total_pages: "4",
     url: "#users?page="
   });
 
@@ -31,8 +48,24 @@ const listUsers = users => {
   const deleteButtons = mainElement.querySelectorAll('button.delete');
   for (let i = 0; i < deleteButtons.length; i++) {
     const deleteButton = deleteButtons[i];
-    deleteButton.addEventListener('click', event => {
-      User.delete_by_id(deleteButton.getAttribute('data-user-id'));
+    deleteButton.addEventListener('click', async (event) => {
+      try {
+        const id = deleteButton.getAttribute('data-user');
+        if ( await User.delete_by_id(id) ) {
+          // remove user from list
+          const containerUser = (<HTMLInputElement> deleteButton).parentNode
+            .parentNode
+            .parentNode;
+          const parent = (<HTMLInputElement> containerUser).parentNode;
+          parent.removeChild(containerUser);
+
+          showAlert('Usuário deletado com sucesso', 'success');
+        } else {
+          showAlert('Não foi possível deletar o Usuário');
+        }
+      } catch (err) {
+        console.log(err);
+      }
     });
   }
 };
@@ -84,11 +117,10 @@ const showView = async () => {
           let users = '';
 
           if (objPath.key && objPath.key == 'page' && objPath.value) {
-            users = await User.find_by_page(objPath.value);
+            // users = await User.find_by_page(objPath.value);
           } else {
-            users = await User.find_by_page();
+            // users = await User.find_by_page();
           }
-
           listUsers(users);
         }
       } catch (err) {

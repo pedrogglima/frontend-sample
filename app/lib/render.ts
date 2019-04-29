@@ -12,8 +12,9 @@ export const template = (template, method, params) => {
       } else if (method == 'list') {
         // (missing) validate arguments from params
         const users = params.users;
+        const total_pages = params.total_pages;
         const url = params.url;
-        return Users.list({users, url});
+        return Users.list({users, total_pages, url});
 
       } else if (method == 'edit'){
         // (missing) validate arguments from params

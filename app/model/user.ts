@@ -39,11 +39,17 @@ export const find_by_id = async id => {
 };
 
 // delete user by id
-export const delete_by_id = async userId => {
+export const delete_by_id = async id => {
   try {
-    showAlert('usuario foi deletado!', 'success');
+    const respUser = await fetchJSON(`https://reqres.in/api/users/${id}`, 'DELETE');
+    
+    if (respUser.status !== 204) {
+      return false;
+    }
+    return true;
+
   } catch (err) {
-    showAlert(err);
+    throw `${err}: error at operation delete`;
   }
 };
 

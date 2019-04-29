@@ -55,23 +55,21 @@ export const list = Handlebars.compile(`
       <div class="col-sm-9 col-md-9 col-lg-9">
         <h1>Lista de Usuários</h1>
         <div class="container">
-          {{#if users.data.length}}
-            {{#each users.data}}
-              <hr />
-              <div class="row">
+          {{#if users}}
+            {{#each users}}
+              <div class="row" id="row-{{id}}">
+                <hr class="w-100"/>
                 <ul class="user-info">
                   <li>{{first_name}}</li>
                   <li>{{last_name}}</li>
-                  <li><button class="btn btn-link delete" data-user-id="{{id}}">
-                        delete
-                      </button>
+                  <li><button class="btn btn-link delete" data-user="{{id}}">delete</button>
                   </li>
                 </ul>
               </div>
             {{/each}}
 
             <ul class="pagination">
-              {{#paginator 1 users.total_pages url}}
+              {{#paginator 1 total_pages url}}
                 {{this}}
               {{/paginator}}
             </ul>
