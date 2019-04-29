@@ -1,7 +1,7 @@
 import * as Handlebars from '../../node_modules/handlebars/dist/handlebars.js';
 
 export const main = Handlebars.compile(`
-  <div class="container">
+  <div class="container single-page">
     <nav class="navbar navbar-light bg-light mb-3">
       <a class="navbar-brand" href="#">
         Frontend
@@ -13,7 +13,7 @@ export const main = Handlebars.compile(`
 `);
 
 export const notFound = Handlebars.compile(`
-  <div class="container-fluid">
+  <div class="container-fluid page-not-found">
     <div class="row">
       <h1>Error 404 - Page Not Found</h1>
     </div>

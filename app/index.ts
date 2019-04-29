@@ -3,7 +3,6 @@
 // - rever locacao showView
 // - terminar call API (login)
 // - terminar CSS in pages
-// - rever page 404 (replace apenas .app-main)
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
@@ -22,7 +21,7 @@ const home = () => {
 };
 
 // page list users
-const listUsers = (users) => {
+const listUsers = users => {
   const mainElement = document.body.querySelector('.app-main');
   mainElement.innerHTML = Render.template('users', 'list', users);
 
@@ -52,7 +51,7 @@ const listUsers = (users) => {
 };
 
 // page edit user
-const editUser = user => {
+const editUser = async user => {
   try {
     const mainElement = document.body.querySelector('.app-main');
     mainElement.innerHTML = Render.template('users', 'edit', user);
@@ -75,7 +74,9 @@ const editUser = user => {
 
 //Use Window location hash to show the specified view.
 const showView = async () => {
-  document.body.innerHTML = Render.template('shared', 'main', {});
+  if (document.body.querySelector('.single-page') === null) {
+    document.body.innerHTML = Render.template('shared', 'main', {});
+  }
   const objPath = extractPath(window.location.hash);
 
   switch (objPath.view) {
@@ -91,7 +92,6 @@ const showView = async () => {
         if (objPath.id) {
           // const user = await User.find_by_id(objPath.id);
           const user = Fixtures.user();
-          // redirecionar caso getUser fail
           editUser(user);
 
         } else {
@@ -107,14 +107,11 @@ const showView = async () => {
           listUsers(users);
         }
       } catch (err) {
-        showAlert(err);
-        console.log(err);
-        window.location.hash = '#login';
+        throw err;
       }
       break;
     default:
       document.body.innerHTML = Render.template('shared', '404', {});
-      throw Error(`status ${objPath.statusCode} - ${objPath.error}`);
   }
 };
 
@@ -122,5 +119,8 @@ const showView = async () => {
 (async () => {
   document.body.innerHTML = Render.template('shared', 'main', {});
   window.addEventListener('hashchange', showView);
-  showView().catch(err => window.location.hash = '#login');
+  showView().catch(err => {
+    document.body.innerHTML = Render.template('shared', '404', {});
+    console.log(err);
+  });
 })();

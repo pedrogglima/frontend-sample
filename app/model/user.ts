@@ -20,7 +20,7 @@ export const find_by_page = async (pageNumber = '1') => {
 export const find_by_id = async id => {
   try {
     return await fetchJSON(
-      `https://reqres.in/api/users/${id}`,
+      `https://reqres.in/api/unknown/${id}`,
       {
         method: 'GET'
       }

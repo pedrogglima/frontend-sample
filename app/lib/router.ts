@@ -53,5 +53,5 @@ export const extractPath = path => {
     return { view: view_w_qrys };
 
   }
-  return { statusCode: '404', error: 'invalid url' };
+  throw new Error("Invalid URL");
 }
