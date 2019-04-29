@@ -18,7 +18,7 @@ export const template = (template, method, params) => {
 
       } else if (method == 'edit'){
         // (missing) validate arguments from params
-        const user = params.user.data;
+        const user = params.user;
         return Users.edit({user});
 
       } else {

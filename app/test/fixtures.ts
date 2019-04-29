@@ -1,4 +1,6 @@
 
+// Helps with offline input
+// replica user's/response's input
 
 export const users = () => {
   return {

@@ -33,19 +33,18 @@ const listUsers = (users) => {
     deleteButton.addEventListener('click', async (event) => {
       try {
         const id = deleteButton.getAttribute('data-user');
-        if ( await User.delete_by_id(id) ) {
-          // remove user from list
-          const containerUser = (<HTMLInputElement> deleteButton).parentNode
-            .parentNode
-            .parentNode;
-          const parent = (<HTMLInputElement> containerUser).parentNode;
-          parent.removeChild(containerUser);
 
-          showAlert('Usuário deletado com sucesso', 'success');
-        } else {
-          showAlert('Não foi possível deletar o Usuário');
-        }
+        const resp = await User.delete_by_id(id)
+
+        const containerUser = (<HTMLInputElement> deleteButton).parentNode
+          .parentNode
+          .parentNode;
+        const parent = (<HTMLInputElement> containerUser).parentNode;
+        parent.removeChild(containerUser);
+
+        showAlert('Operação concluida com sucesso', 'success');
       } catch (err) {
+        showAlert('Falha na operação');
         console.log(err);
       }
     });
@@ -65,11 +64,12 @@ const editUser = user => {
       const user_id = (<HTMLInputElement> form.querySelector('#user_id')).value;
       const user_nome = (<HTMLInputElement> form.querySelector('#user_nome')).value;
       const user_sobrenome = (<HTMLInputElement> form.querySelector('#user_sobrenome')).value;
-      await User.update(user_id, user_nome, user_sobrenome);
+      const resp = await User.update(user_id, user_nome, user_sobrenome);
+      showAlert('Operação concluida com sucesso', 'success');
     });
-
   } catch (err) {
-    showAlert(err);
+    showAlert('Falha na operação');
+    console.log(err);
   }
 };
 
