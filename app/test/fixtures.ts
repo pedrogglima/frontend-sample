@@ -7,18 +7,18 @@ export const users = () => {
     users: [
          {
            id: 1,
-           first_name: 'ex1',
-           last_name:  'ex1'
+           first_name: 'Lucas Miguel',
+           last_name:  'Gomes'
          },
          {
            id: 2,
-           first_name: 'ex2',
-           last_name:  'ex2'
+           first_name: 'Rogério da Silva',
+           last_name:  'Jesus'
          },
          {
            id: 3,
-           first_name: 'ex3',
-           last_name:  'ex3'
+           first_name: 'Amauri Oliveira',
+           last_name:  'Fonseca'
          }
     ],
     total_pages: "4",
@@ -30,8 +30,8 @@ export const user = () => {
   return {
     user: {
       id: 1,
-      first_name: 'ex1',
-      last_name:  'ex1'
+      first_name: 'Lucas Miguel',
+      last_name:  'Gomes'
     }
   }
 };

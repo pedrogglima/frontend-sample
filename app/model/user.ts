@@ -1,4 +1,4 @@
-import { fetchJSON } from '../lib/utils.ts';
+import { fetchJSON, fetchTXT } from '../lib/utils.ts';
 
 // falta fazer nesse modulo
 // - padronizar URL api.
@@ -32,7 +32,7 @@ export const find_by_id = async id => {
 
 export const delete_by_id = async id => {
   try {
-    return await fetchJSON(
+    return await fetchTXT(
       `https://reqres.in/api/users/${id}`,
       {
         method: 'DELETE'

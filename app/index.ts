@@ -25,6 +25,21 @@ const listUsers = users => {
   const mainElement = document.body.querySelector('.app-main');
   mainElement.innerHTML = Render.template('users', 'list', users);
 
+  // add editar event on buttons
+  const editButtons = mainElement.querySelectorAll('button.edit');
+  for (let i = 0; i < editButtons.length; i++) {
+    const editButton = editButtons[i];
+    editButton.addEventListener('click', event => {
+      try {
+        const id = editButton.getAttribute('data-user');
+        window.location.hash = `#users/${id}`
+      } catch (err) {
+        showAlert('Falha na operação');
+        console.log(err);
+      }
+    });
+  }
+
   // add delete event on buttons
   const deleteButtons = mainElement.querySelectorAll('button.delete');
   for (let i = 0; i < deleteButtons.length; i++) {
@@ -33,11 +48,11 @@ const listUsers = users => {
       try {
         const id = deleteButton.getAttribute('data-user');
 
-        const resp = await User.delete_by_id(id)
+        const resp = await User.delete_by_id(id);
 
         const containerUser = (<HTMLInputElement> deleteButton).parentNode
-          .parentNode
           .parentNode;
+
         const parent = (<HTMLInputElement> containerUser).parentNode;
         parent.removeChild(containerUser);
 

@@ -3,9 +3,17 @@ import * as Handlebars from '../../node_modules/handlebars/dist/handlebars.js';
 export const main = Handlebars.compile(`
   <div class="container single-page">
     <nav class="navbar navbar-light bg-light mb-3">
-      <a class="navbar-brand" href="#">
-        Frontend
-      </a>
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            Frontend
+          </a>
+        </div>
+        <ul class="nav list-inline">
+          <li class="list-inline-item pr-2 border-right"><a href="#users">Usuários</a></li> 
+          <li class="list-inline-item"><a href="#/">Sair</a></li>
+        </ul>
+      </div>
     </nav>
     <div class="app-alerts"></div>
     <div class="app-main"></div>

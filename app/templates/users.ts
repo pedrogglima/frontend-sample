@@ -16,8 +16,8 @@ Handlebars.registerHelper('paginator', (from, to, url, block) => {
 export const login = Handlebars.compile(`
   <div class="container">
     <div class="row mt-5">
-      <div class="col-sm-3 col-md-3 col-lg-4"></div>
-      <div class="col-sm-6 col-md-6 col-lg-4">
+      <div class="col-sm-1 col-md-2 col-lg-3"></div>
+      <div class="col-sm-10 col-md-8 col-lg-6">
         <div class="card">
           <div class="card-header">
             Área de acesso
@@ -43,7 +43,7 @@ export const login = Handlebars.compile(`
           </div>
         </div>
       </div>
-      <div class="col-sm-3 col-md-3 col-lg-4"></div>
+      <div class="col-sm-1 col-md-2 col-lg-3"></div>
     </div>
   </div>
 `);
@@ -51,38 +51,44 @@ export const login = Handlebars.compile(`
 export const list = Handlebars.compile(`
   <div class="container">
     <div class="row mt-5">
-      <div class="col-sm-1 col-md-1 col-lg-1"></div>
-      <div class="col-sm-9 col-md-9 col-lg-9">
-        <h1>Lista de Usuários</h1>
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <h2>Lista de Usuários</h2>
         <div class="container">
           {{#if users}}
             {{#each users}}
               <div class="row" id="row-{{id}}">
                 <hr class="w-100"/>
-                <ul class="user-info">
-                  <li>{{first_name}}</li>
-                  <li>{{last_name}}</li>
-                  <li><button class="btn btn-link delete" data-user="{{id}}">delete</button>
-                  </li>
-                </ul>
+                <div class="col">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item pb-1 pt-2 border-0"><b>{{last_name}}</b></li>
+                    <li class="list-group-item py-1 border-0"><b><small>{{first_name}}</small></b></li>
+                  </ul>
+                </div>
+                <div class="btn-group">
+                  <button class="btn btn-link p0 border-right edit" data-user="{{id}}">editar</button>
+                  <button class="btn btn-link p0 delete" data-user="{{id}}">deletar</button>
+                </div>
               </div>
             {{/each}}
-
-            <ul class="pagination">
-              {{#paginator 1 total_pages url}}
-                {{this}}
-              {{/paginator}}
-            </ul>
-
+              <div class="row">
+                <hr class="w-100"/>
+                <div class="col-md-5"></div>
+                <div class="col-md-7">
+                  <ul class="pagination">
+                    {{#paginator 1 total_pages url}}
+                      {{this}}
+                    {{/paginator}}
+                  </ul>
+                </div>
+              </div>
           {{else}}
             <div class="row">
-              <hr />
+              <hr class="w-100" />
               <h4>Usuários não encontrados.</h4>
             </div>
           {{/if}}
         </div>
       </div>
-      <div class="col-sm-2 col-md-2 col-lg-2"></div>
     </div>
   </div>
 `);
