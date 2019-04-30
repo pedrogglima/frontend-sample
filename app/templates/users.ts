@@ -15,7 +15,7 @@ Handlebars.registerHelper('paginator', (from, to, url, block) => {
 
 export const login = Handlebars.compile(`
   <div class="container">
-    <div class="row mt-5">
+    <div class="row">
       <div class="col-sm-1 col-md-2 col-lg-3"></div>
       <div class="col-sm-10 col-md-8 col-lg-6">
         <div class="card">
@@ -50,7 +50,7 @@ export const login = Handlebars.compile(`
 
 export const list = Handlebars.compile(`
   <div class="container">
-    <div class="row mt-5">
+    <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12">
         <h2>Lista de Usuários</h2>
         <div class="container">
@@ -95,9 +95,9 @@ export const list = Handlebars.compile(`
 
 export const edit = Handlebars.compile(`
   <div class="container">
-    <div class="row mt-5">
-      <div class="col-sm-2 col-md-2 col-lg-3"></div>
-      <div class="col-sm-8 col-md-8 col-lg-6">
+    <div class="row">
+      <div class="col-sm-1 col-md-2 col-lg-3"></div>
+      <div class="col-sm-10 col-md-8 col-lg-6">
         <div class="card">
           <div class="card-header">
             Editar Usuário
@@ -120,7 +120,7 @@ export const edit = Handlebars.compile(`
           </div>
         </div>
       </div>
-      <div class="col-sm-2 col-md-2 col-lg-2"></div>
+      <div class="col-sm-1 col-md-2 col-lg-3"></div>
     </div>
   </div>
 `);

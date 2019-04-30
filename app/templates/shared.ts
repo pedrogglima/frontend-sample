@@ -1,22 +1,29 @@
 import * as Handlebars from '../../node_modules/handlebars/dist/handlebars.js';
 
 export const main = Handlebars.compile(`
-  <div class="container single-page">
-    <nav class="navbar navbar-light bg-light mb-3">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">
-            Frontend
-          </a>
-        </div>
-        <ul class="nav list-inline">
-          <li class="list-inline-item pr-2 border-right"><a href="#users">Usuários</a></li> 
-          <li class="list-inline-item"><a href="#/">Sair</a></li>
-        </ul>
+  <div class="single-page">
+    <header class="bg-light border border-top-0 mb-3">
+      <div class="container border border-top-0 border-bottom-0">
+        <nav class="navbar navbar-light bg-light">
+          <div class="container">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">
+                Frontend
+              </a>
+            </div>
+            <ul class="nav list-inline">
+              <li class="list-inline-item pr-2 border-right"><a href="#users">Usuários</a></li>
+              <li class="list-inline-item"><a href="#/">Sair</a></li>
+            </ul>
+          </div>
+        </nav>
       </div>
-    </nav>
-    <div class="app-alerts"></div>
-    <div class="app-main"></div>
+    </header>
+
+    <div class="container">
+      <div class="app-alerts"></div>
+      <div class="app-main mt-5"></div>
+    </div>
   </div>
 `);
 
