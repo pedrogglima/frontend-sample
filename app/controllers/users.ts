@@ -2,8 +2,8 @@ import * as User from '../model/user.ts';
 import * as UserHelpers from '../helpers/users.ts';
 import * as SharedHelpers from '../helpers/shared.ts';
 import * as Render from '../lib/render.ts';
-import * as Fixtures from '../test/fixtures.ts';
-import { hasSession, getSession, setSession, deleteSession } from '../lib/utils.ts';
+//import * as Fixtures from '../test/fixtures.ts';
+import { hasSession, getSession, setSession, deleteSession } from '../lib/session.ts';
 
 // page login
 export const login = async () => {

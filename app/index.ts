@@ -9,7 +9,8 @@ import 'bootstrap';
 import * as Render from './lib/render.ts';
 import * as UsersController from './controllers/users.ts';
 import { extractPath } from './lib/router.ts';
-import { hasSession } from './lib/utils.ts';
+import { hasSession } from './lib/session.ts';
+
 
 //Use Window location hash to show the specified view.
 const showView = async () => {
