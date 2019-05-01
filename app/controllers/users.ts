@@ -1,5 +1,6 @@
 import * as User from '../model/user.ts';
 import * as UserHelpers from '../helpers/users.ts';
+import * as SharedHelpers from '../helpers/shared.ts';
 import * as Render from '../lib/render.ts';
 import * as Fixtures from '../test/fixtures.ts';
 import { hasSession, getSession, setSession, deleteSession } from '../lib/utils.ts';
@@ -21,8 +22,12 @@ export const login = async () => {
 export const logout = async () => {
   try {
     if (await hasSession()) {
+      SharedHelpers.startLoading();
       await User.logout(await getSession());
+      SharedHelpers.stopLoading();
+
       await deleteSession();
+
       Render.redirect('login');
     }
   } catch (err) {
@@ -36,7 +41,10 @@ export const index = async (page = '1') => {
     if (!await hasSession()) {
       Render.redirect('login');
     } else {
+      SharedHelpers.startLoading();
       const users = await User.find_by_page(page, await getSession());
+      SharedHelpers.stopLoading();
+
       //const users = Fixtures.users();
       UserHelpers.listUsers(users);
     }
@@ -51,7 +59,10 @@ export const edit = async (id) => {
     if (!await hasSession()) {
       Render.redirect('login');
     } else {
+      SharedHelpers.startLoading();
       const user = await User.find_by_id(id, await getSession());
+      SharedHelpers.stopLoading();
+
       //const user = Fixtures.user();
       UserHelpers.editUser(user);
     }

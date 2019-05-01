@@ -46,6 +46,9 @@ export const template = (template, method, params) => {
       } else if (method == '404'){
         return Shared.notFound();
 
+      } else if (method == 'loading'){
+        return Shared.loading();
+
       } else {
         // (missing) throw error
         console.log('argument method do not exist');

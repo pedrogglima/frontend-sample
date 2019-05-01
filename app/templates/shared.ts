@@ -1,7 +1,7 @@
 import * as Handlebars from '../../node_modules/handlebars/dist/handlebars.js';
 
 export const main = Handlebars.compile(`
-  <div class="single-page">
+  <div>
     <header class="bg-light border border-top-0 mb-3">
       <div class="container border border-top-0 border-bottom-0">
         <nav class="navbar navbar-light bg-light">
@@ -23,6 +23,7 @@ export const main = Handlebars.compile(`
     </header>
 
     <div class="container">
+      <div class="app-loading"></div>
       <div class="app-alerts"></div>
       <div class="app-main mt-5"></div>
     </div>
@@ -30,9 +31,29 @@ export const main = Handlebars.compile(`
 `);
 
 export const notFound = Handlebars.compile(`
-  <div class="container-fluid page-not-found">
+  <div class="container">
     <div class="row">
       <h1>Error 404 - Page Not Found</h1>
+    </div>
+  </div>
+`);
+
+export const loading = Handlebars.compile(`
+  <div style="
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: visible;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: transparent;
+  ">
+    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
   </div>
 `);

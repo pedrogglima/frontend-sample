@@ -72,8 +72,8 @@ export const list = Handlebars.compile(`
             {{/each}}
               <div class="row">
                 <hr class="w-100"/>
-                <div class="col-md-5"></div>
-                <div class="col-md-7">
+                <div class="col-sm-5 col-md-5 col-lg-5"></div>
+                <div class="col-sm-7 col-md-7 col-lg-7">
                   <ul class="pagination">
                     {{#paginator 1 total_pages url}}
                       {{this}}

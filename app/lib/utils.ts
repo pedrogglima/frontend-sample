@@ -69,7 +69,7 @@ export const getSession = async () => {
 export const deleteSession = async () => {
   try {
     const cookie = await getSession();
-    if (cookie !== null){
+    if (cookie !== null) {
       document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
   } catch (err) {
