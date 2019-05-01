@@ -14,7 +14,7 @@ export const main = Handlebars.compile(`
             {{#if userAuth}}
               <ul class="nav list-inline">
                 <li class="list-inline-item pr-2 border-right"><a href="#users">Usuários</a></li>
-                <li class="list-inline-item"><a href="#logoff">Sair</a></li>
+                <li class="list-inline-item"><a href="#logout">Sair</a></li>
               </ul>
             {{/if}}
           </div>

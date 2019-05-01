@@ -25,8 +25,8 @@ const showView = async () => {
     case '#login':
       UsersController.login();
       break;
-    case '#logoff':
-      UsersController.logoff();
+    case '#logout':
+      UsersController.logout();
       break;
     case '#users':
       try {

@@ -17,8 +17,8 @@ export const login = async () => {
   }
 };
 
-// logoff
-export const logoff = async () => {
+// logout
+export const logout = async () => {
   try {
     if (await hasSession()) {
       await User.logout(await getSession());
