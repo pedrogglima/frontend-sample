@@ -42,3 +42,9 @@ export const login = () => {
     "password": "teste"
   }
 };
+
+export const token = () => {
+  return {
+    "token": "QpwL5tke4Pnpja7X"
+  }
+};

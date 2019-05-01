@@ -27,11 +27,11 @@ export const login = Handlebars.compile(`
             <form>
               <div class="form-group">
                 <label for="login">Login</label>
-                <input type="text" class="form-control" placeholder="Digite seu login">
+                <input type="text" id="user_login" class="form-control" placeholder="Digite seu login">
               </div>
               <div class="form-group">
                 <label for="senha">Senha</label>
-                <input type="password" class="form-control" placeholder="Digite sua senha">
+                <input type="password" id="user_password" class="form-control" placeholder="Digite sua senha">
               </div>
               <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input">

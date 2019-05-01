@@ -11,14 +11,15 @@ export const template = (template, method, params) => {
 
       } else if (method == 'list') {
         // (missing) validate arguments from params
-        const users = params.users;
-        const total_pages = params.total_pages;
+        const users = params.users.data;
+        const total_pages = params.users.total_pages;
         const url = params.url;
+
         return Users.list({users, total_pages, url});
 
       } else if (method == 'edit'){
         // (missing) validate arguments from params
-        const user = params.user;
+        const user = params.user.data;
         return Users.edit({user});
 
       } else {
@@ -29,7 +30,9 @@ export const template = (template, method, params) => {
 
     case 'shared':
       if (method === 'main') {
-        return Shared.main();
+        // (missing) validate arguments from params
+        const userAuth = params.userAuth;
+        return Shared.main({userAuth});
 
       } else if (method == 'alert') {
         // (missing) validate arguments from params

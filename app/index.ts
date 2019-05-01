@@ -9,12 +9,13 @@ import 'bootstrap';
 import * as Render from './lib/render.ts';
 import * as UsersController from './controller/users.ts';
 import { extractPath } from './lib/router.ts';
+import { hasSession } from './lib/utils.ts';
 
 //Use Window location hash to show the specified view.
 const showView = async () => {
-  if (document.body.querySelector('.single-page') === null) {
-    document.body.innerHTML = Render.template('shared', 'main', {});
-  }
+  document.body.innerHTML = Render.template('shared', 'main', {
+    userAuth: await hasSession()
+  });
   const objPath = extractPath(window.location.hash);
 
   switch (objPath.view) {
@@ -23,6 +24,9 @@ const showView = async () => {
       break;
     case '#login':
       UsersController.login();
+      break;
+    case '#logoff':
+      UsersController.logoff();
       break;
     case '#users':
       try {
@@ -47,7 +51,9 @@ const showView = async () => {
 
 // Page setup.
 (async () => {
-  document.body.innerHTML = Render.template('shared', 'main', {});
+  document.body.innerHTML = Render.template('shared', 'main', {
+    userAuth: await hasSession()
+  });
   window.addEventListener('hashchange', showView);
   showView().catch(err => {
     document.body.innerHTML = Render.template('shared', '404', {});

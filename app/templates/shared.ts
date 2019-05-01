@@ -11,10 +11,12 @@ export const main = Handlebars.compile(`
                 Frontend
               </a>
             </div>
-            <ul class="nav list-inline">
-              <li class="list-inline-item pr-2 border-right"><a href="#users">Usuários</a></li>
-              <li class="list-inline-item"><a href="#/">Sair</a></li>
-            </ul>
+            {{#if userAuth}}
+              <ul class="nav list-inline">
+                <li class="list-inline-item pr-2 border-right"><a href="#users">Usuários</a></li>
+                <li class="list-inline-item"><a href="#logoff">Sair</a></li>
+              </ul>
+            {{/if}}
           </div>
         </nav>
       </div>
