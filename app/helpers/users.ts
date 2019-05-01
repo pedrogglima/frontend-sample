@@ -3,64 +3,17 @@ import * as Render from '../lib/render.ts';
 import * as Fixtures from '../test/fixtures.ts';
 import { hasSession, getSession, setSession, deleteSession } from '../lib/utils.ts';
 
-// page login
-export const login = async () => {
-  try {
-    if (!await hasSession()) {
-      session();
-    } else {
-      window.location.hash = `#users`;
-    }
-  } catch (err) {
-    throw err;
-  }
-};
-
-// logoff
-export const logoff = async () => {
-  try {
-    if (await hasSession()) {
-      await User.logout(await getSession());
-      await deleteSession();
-      window.location.hash = `#login`;
-    }
-  } catch (err) {
-    throw err;
-  }
-};
-
-// page index
-export const index = async (page = '1') => {
-  try {
-    if (!await hasSession()) {
-      window.location.hash = `#login`;
-    } else {
-      const users = await User.find_by_page(page, await getSession());
-      //const users = Fixtures.users();
-      listUsers(users);
-    }
-  } catch (err) {
-    throw err;
-  }
-};
-
-// page edit
-export const edit = async (id) => {
-  try {
-    if (!await hasSession()) {
-      window.location.hash = `#login`;
-    } else {
-      const user = await User.find_by_id(id, await getSession());
-      //const user = Fixtures.user();
-      editUser(user);
-    }
-  } catch (err) {
-    throw err;
-  }
+const showAlert = (message, type = 'danger') => {
+  const alertsElement = document.body.querySelector('.app-alerts');
+  const html = Render.template('shared', 'alert', {
+    type: type,
+    message: message
+  });
+  alertsElement.insertAdjacentHTML('beforeend', html);
 };
 
 // user session
-const session = () => {
+export const session = () => {
   try {
     const mainElement = document.body.querySelector('.app-main');
     mainElement.innerHTML = Render.template('users', 'login', {});
@@ -74,7 +27,7 @@ const session = () => {
       const resp = await User.login(user_login, user_password);
       //const resp = Fixtures.token();
       await setSession("token", resp.token);
-      window.location.hash = `#users`;
+      Render.redirect('users');
     });
   } catch (err) {
     showAlert('Falha na operação');
@@ -83,7 +36,7 @@ const session = () => {
 };
 
 // list users
-const listUsers = users => {
+export const listUsers = users => {
   const mainElement = document.body.querySelector('.app-main');
   mainElement.innerHTML = Render.template('users', 'list', {users: users, url: "#users?page="});
 
@@ -94,7 +47,7 @@ const listUsers = users => {
     editButton.addEventListener('click', event => {
       try {
         const id = editButton.getAttribute('data-user');
-        window.location.hash = `#users/${id}`;
+        Render.redirect(`users/${id}`);
       } catch (err) {
         showAlert('Falha na operação');
         console.log(err);
@@ -125,7 +78,7 @@ const listUsers = users => {
 };
 
 // edit user
-const editUser = user => {
+export const editUser = user => {
   try {
     const mainElement = document.body.querySelector('.app-main');
     mainElement.innerHTML = Render.template('users', 'edit', {user: user});
@@ -144,14 +97,4 @@ const editUser = user => {
     showAlert('Falha na operação');
     console.log(err);
   }
-};
-
-// alert message
-const showAlert = (message, type = 'danger') => {
-  const alertsElement = document.body.querySelector('.app-alerts');
-  const html = Render.template('shared', 'alert', {
-    type: type,
-    message: message
-  });
-  alertsElement.insertAdjacentHTML('beforeend', html);
 };

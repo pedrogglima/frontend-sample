@@ -1,6 +1,9 @@
 import * as Users from '../templates/users.ts';
 import * as Shared from '../templates/shared.ts';
 
+export const redirect = (path) => {
+  return window.location.hash = "#" + path;
+}
 
 export const template = (template, method, params) => {
 

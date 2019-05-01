@@ -7,7 +7,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 
 import * as Render from './lib/render.ts';
-import * as UsersController from './controller/users.ts';
+import * as UsersController from './controllers/users.ts';
 import { extractPath } from './lib/router.ts';
 import { hasSession } from './lib/utils.ts';
 
