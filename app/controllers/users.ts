@@ -170,7 +170,7 @@ export const editUser = user => {
       const user_sobrenome = (<HTMLInputElement> form
         .querySelector('#user_sobrenome'))
         .value;
-                                    
+
       startLoaderBar();
       const resp = await User.update(user_id, user_nome, user_sobrenome, await getSessionToken());
       stopLoaderBar();
