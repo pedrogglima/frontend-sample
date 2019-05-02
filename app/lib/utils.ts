@@ -1,4 +1,4 @@
-import { template} from '../lib/render.ts';
+import { render} from '../lib/render.ts';
 
 export const fetchJSON = async (url, args) => {
   try {
@@ -24,19 +24,19 @@ export const fetchTXT = async (url, args) => {
   }
 };
 
-export const startLoading = () => {
+export const startLoaderBar = () => {
   const appLoading = document.body.querySelector('.app-loading');
-  appLoading.innerHTML = template('shared', 'loading', {});
+  appLoading.innerHTML = render('shared', 'loder', {});
 }
 
-export const stopLoading = () => {
+export const stopLoaderBar = () => {
   const appLoading = document.body.querySelector('.app-loading');
   appLoading.innerHTML = "<div></div>";
 }
 
 export const showAlert = (message, type = 'danger') => {
   const alertsElement = document.body.querySelector('.app-alerts');
-  const html = template('shared', 'alert', {
+  const html = render('shared', 'alert', {
     type: type,
     message: message
   });

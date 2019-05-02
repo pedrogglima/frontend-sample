@@ -7,14 +7,14 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 
 import * as UsersController from './controllers/users.ts';
-import { template } from './lib/render.ts';
+import { render } from './lib/render.ts';
 import { extractPath } from './lib/router.ts';
 import { hasSession } from './lib/session.ts';
 
 
 //Use Window location hash to show the specified view.
 const showView = async () => {
-  document.body.innerHTML = template('shared', 'main', {
+  document.body.innerHTML = render('shared', 'main', {
     userAuth: await hasSession()
   });
   const objPath = extractPath(window.location.hash);
@@ -46,18 +46,18 @@ const showView = async () => {
       }
       break;
     default:
-      document.body.innerHTML = template('shared', '404', {});
+      document.body.innerHTML = render('shared', '404', {});
   }
 };
 
 // Page setup.
 (async () => {
-  document.body.innerHTML = template('shared', 'main', {
+  document.body.innerHTML = render('shared', 'main', {
     userAuth: await hasSession()
   });
   window.addEventListener('hashchange', showView);
   showView().catch(err => {
-    document.body.innerHTML = template('shared', '404', {});
+    document.body.innerHTML = render('shared', '404', {});
     console.log(err);
   });
 })();

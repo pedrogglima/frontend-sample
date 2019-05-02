@@ -1,11 +1,11 @@
 import * as Users from '../templates/users.ts';
 import * as Shared from '../templates/shared.ts';
 
-export const redirect = (path) => {
+export const redirectTo = (path) => {
   return window.location.hash = "#" + path;
 }
 
-export const template = (template, method, params) => {
+export const render = (template, method, params) => {
 
   switch (template) {
     case 'users':
@@ -46,7 +46,7 @@ export const template = (template, method, params) => {
       } else if (method == '404'){
         return Shared.notFound();
 
-      } else if (method == 'loading'){
+      } else if (method == 'loader'){
         return Shared.loading();
 
       } else {

@@ -1,8 +1,8 @@
 import * as User from '../model/user.ts';
-import { template, redirect } from '../lib/render.ts';
+import { render, redirectTo } from '../lib/render.ts';
 //import * as Fixtures from '../test/fixtures.ts';
-import { showAlert, startLoading, stopLoading } from '../lib/utils.ts';
-import { hasSession, getSession, setSession, deleteSession } from '../lib/session.ts';
+import { showAlert, startLoaderBar, stopLoaderBar } from '../lib/utils.ts';
+import { hasSession, getSessionToken, setSessionToken, deleteSession } from '../lib/session.ts';
 
 // page login
 export const login = async () => {
@@ -10,7 +10,7 @@ export const login = async () => {
     if (!await hasSession()) {
       session();
     } else {
-      redirect('users');
+      redirectTo('users');
     }
   } catch (err) {
     throw err;
@@ -21,13 +21,13 @@ export const login = async () => {
 export const logout = async () => {
   try {
     if (await hasSession()) {
-      startLoading();
-      await User.logout(await getSession());
-      stopLoading();
+      startLoaderBar();
+      await User.logout(await getSessionToken());
+      stopLoaderBar();
 
       await deleteSession();
 
-      redirect('login');
+      redirectTo('login');
     }
   } catch (err) {
     throw err;
@@ -38,11 +38,11 @@ export const logout = async () => {
 export const index = async (page = '1') => {
   try {
     if (!await hasSession()) {
-      redirect('login');
+      redirectTo('login');
     } else {
-      startLoading();
-      const users = await User.find_by_page(page, await getSession());
-      stopLoading();
+      startLoaderBar();
+      const users = await User.find_by_page(page, await getSessionToken());
+      stopLoaderBar();
 
       //const users = Fixtures.users();
       listUsers(users);
@@ -56,11 +56,11 @@ export const index = async (page = '1') => {
 export const edit = async (id) => {
   try {
     if (!await hasSession()) {
-      redirect('login');
+      redirectTo('login');
     } else {
-      startLoading();
-      const user = await User.find_by_id(id, await getSession());
-      stopLoading();
+      startLoaderBar();
+      const user = await User.find_by_id(id, await getSessionToken());
+      stopLoaderBar();
 
       //const user = Fixtures.user();
       editUser(user);
@@ -73,28 +73,28 @@ export const edit = async (id) => {
 // user session
 export const session = () => {
   const mainElement = document.body.querySelector('.app-main');
-  mainElement.innerHTML = template('users', 'login', {});
+  mainElement.innerHTML = render('users', 'login', {});
 
   const form = mainElement.querySelector('form');
   form.addEventListener('submit', async (event) => {
     try {
       event.preventDefault();
-      const user_login = (<HTMLInputElement> form
+      const login = (<HTMLInputElement> form
         .querySelector('#user_login'))
         .value;
 
-      const user_password = (<HTMLInputElement> form
+      const password = (<HTMLInputElement> form
         .querySelector('#user_password'))
         .value;
 
-      startLoading();
-      const resp = await User.login(user_login, user_password);
-      await setSession("token", resp.token);
+      startLoaderBar();
+      const resp = await User.login(login, password);
+      await setSessionToken(resp.token);
       //const resp = Fixtures.token();
-      stopLoading();
-      redirect('users');
+      stopLoaderBar();
+      redirectTo('users');
     } catch (err) {
-      stopLoading();
+      stopLoaderBar();
       showAlert('Falha na operação');
       console.log(err);
     }
@@ -105,7 +105,7 @@ export const session = () => {
 export const listUsers = users => {
   const mainElement = document.body.querySelector('.app-main');
   mainElement.innerHTML =
-    template('users', 'list', {users: users, url: "#users?page="});
+    render('users', 'list', {users: users, url: "#users?page="});
 
   // add editar event on buttons
   const editButtons = mainElement.querySelectorAll('button.edit');
@@ -113,7 +113,7 @@ export const listUsers = users => {
     const editButton = editButtons[i];
     editButton.addEventListener('click', event => {
       const id = editButton.getAttribute('data-user');
-      redirect(`users/${id}`);
+      redirectTo(`users/${id}`);
     });
   }
 
@@ -125,9 +125,9 @@ export const listUsers = users => {
       try {
         const id = deleteButton.getAttribute('data-user');
 
-        startLoading();
-        const resp = await User.delete_by_id(id, await getSession());
-        stopLoading();
+        startLoaderBar();
+        const resp = await User.delete_by_id(id, await getSessionToken());
+        stopLoaderBar();
 
         const containerUser =
           (<HTMLInputElement> deleteButton).parentNode
@@ -140,7 +140,7 @@ export const listUsers = users => {
 
         showAlert('Operação concluida com sucesso', 'success');
       } catch (err) {
-        stopLoading();
+        stopLoaderBar();
         showAlert('Falha na operação');
         console.log(err);
       }
@@ -154,7 +154,7 @@ export const editUser = user => {
     document.body.querySelector('.app-main');
 
   mainElement.innerHTML =
-    template('users', 'edit', {user: user});
+    render('users', 'edit', {user: user});
 
   const form = mainElement.querySelector('form');
   form.addEventListener('submit', async (event) => {
@@ -170,15 +170,15 @@ export const editUser = user => {
       const user_sobrenome = (<HTMLInputElement> form
         .querySelector('#user_sobrenome'))
         .value;
-
-      startLoading();
-      const resp = await User.update(user_id, user_nome, user_sobrenome, await getSession());
-      stopLoading();
+                                    
+      startLoaderBar();
+      const resp = await User.update(user_id, user_nome, user_sobrenome, await getSessionToken());
+      stopLoaderBar();
 
       showAlert('Operação concluida com sucesso', 'success');
 
     } catch (err) {
-      stopLoading();
+      stopLoaderBar();
       showAlert('Falha na operação');
       console.log(err);
     }

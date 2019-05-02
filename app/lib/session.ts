@@ -1,6 +1,6 @@
 export const hasSession = async () => {
   try {
-    const token = await getSession();
+    const token = await getSessionToken();
     if (token === null) {
       return false;
     }
@@ -10,15 +10,15 @@ export const hasSession = async () => {
   }
 };
 
-export const setSession = async (key, value) => {
+export const setSessionToken = async (value) => {
   try {
-    document.cookie = `${key}=${value};`;
+    document.cookie = `Token=${value};`;
   } catch (err) {
     throw new Error("Error while setting cookie: " + err);
   }
 };
 
-export const getSession = async () => {
+export const getSessionToken = async () => {
   try {
     const keyname = "token=";
     const decodedCookie = decodeURIComponent(document.cookie);
@@ -41,7 +41,7 @@ export const getSession = async () => {
 
 export const deleteSession = async () => {
   try {
-    const cookie = await getSession();
+    const cookie = await getSessionToken();
     if (cookie !== null) {
       document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
