@@ -31,9 +31,21 @@ export const main = Handlebars.compile(`
 `);
 
 export const notFound = Handlebars.compile(`
-  <div class="container">
-    <div class="row">
-      <h1>Error 404 - Page Not Found</h1>
+  <div style="
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  ">
+    <div>
+      <h1>ERROR 404</h1>
+      <span style="
+        margin-left: 0.8em;
+        font-size: 1.0em;
+      ">
+        A página que você procura não foi encontrada, <a href="#/">voltar.</a>
+      </span>
+      </p>
     </div>
   </div>
 `);

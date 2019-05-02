@@ -14,39 +14,44 @@ import { hasSession } from './lib/session.ts';
 
 //Use Window location hash to show the specified view.
 const showView = async () => {
-  document.body.innerHTML = render('shared', 'main', {
-    userAuth: await hasSession()
-  });
-  const objPath = extractPath(window.location.hash);
+  try {
+    document.body.innerHTML = render('shared', 'main', {
+      userAuth: await hasSession()
+    });
+    const objPath = extractPath(window.location.hash);
 
-  switch (objPath.view) {
-    case '#/':
-      UsersController.login();
-      break;
-    case '#login':
-      UsersController.login();
-      break;
-    case '#logout':
-      UsersController.logout();
-      break;
-    case '#users':
-      try {
-        // edit user || list users
-        if (objPath.id) {
-          UsersController.edit(objPath.id);
-        } else {
-          if (objPath.key && objPath.key == 'page' && objPath.value) {
-            UsersController.index(objPath.value);
+    switch (objPath.view) {
+      case '#/':
+        UsersController.login();
+        break;
+      case '#login':
+        UsersController.login();
+        break;
+      case '#logout':
+        UsersController.logout();
+        break;
+      case '#users':
+        try {
+          // edit user || list users
+          if (objPath.id) {
+            UsersController.edit(objPath.id);
           } else {
-            UsersController.index();
+            if (objPath.key && objPath.key == 'page' && objPath.value) {
+              UsersController.index(objPath.value);
+            } else {
+              UsersController.index();
+            }
           }
+        } catch (err) {
+          throw err;
         }
-      } catch (err) {
-        throw err;
-      }
-      break;
-    default:
-      document.body.innerHTML = render('shared', '404', {});
+        break;
+      default:
+        console.log('inside switch');
+        document.body.innerHTML = render('shared', '404', {});
+    }
+  } catch (err) {
+    throw err;
   }
 };
 
@@ -58,6 +63,5 @@ const showView = async () => {
   window.addEventListener('hashchange', showView);
   showView().catch(err => {
     document.body.innerHTML = render('shared', '404', {});
-    console.log(err);
   });
 })();
