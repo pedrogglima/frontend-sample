@@ -2,15 +2,16 @@ import * as Handlebars from '../../node_modules/handlebars/dist/handlebars.js';
 
 // handle paginatons for simple cases (few pages, etc.)
 Handlebars.registerHelper('paginator', (from, to, url, block) => {
-    let accum = '';
-    let pageNumber = '';
+  let accum = '';
+  let pageNumber = '';
 
-    for(let i = from; i <= to; ++i) {
-        pageNumber = block.fn(i).trim();
-        accum += ['<li class="page-item"><a class="page-link" href="', url,
-                    pageNumber, '">', pageNumber, '</a></li>'].join('');
-    }
-    return accum;
+  for (let i = from; i <= to; ++i) {
+    pageNumber = block.fn(i).trim();
+    accum += ['<li class="page-item"><a class="page-link" href="', url, pageNumber, '">', pageNumber, '</a></li>'].join(
+      ''
+    );
+  }
+  return accum;
 });
 
 export const login = Handlebars.compile(`
@@ -75,7 +76,7 @@ export const list = Handlebars.compile(`
                 <div class="col-sm-5 col-md-5 col-lg-5"></div>
                 <div class="col-sm-7 col-md-7 col-lg-7">
                   <ul class="pagination">
-                    {{#paginator 1 total_pages url}}
+                    {{#paginator 1 totalPages url}}
                       {{this}}
                     {{/paginator}}
                   </ul>

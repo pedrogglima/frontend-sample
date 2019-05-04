@@ -17,16 +17,20 @@ module.exports = {
     port: 8080,
   },
   module: {
-    rules: [{
-      test: /\.ts$/,
-      loader: 'ts-loader',
-    },{
-      test: /\.css$/,
-      use: [ 'style-loader', 'css-loader' ]
-    },{
-      test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-      loader: 'url-loader?limit=100000',
-    }],
+    rules: [
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url-loader?limit=100000',
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -34,7 +38,7 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
-      jQuery: 'jquery'
+      jQuery: 'jquery',
     }),
   ],
 };

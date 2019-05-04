@@ -40,3 +40,5 @@ node_modules
 build
 npm-debug.log
 .env
+.eslintrc.json
+.prettierrc.json

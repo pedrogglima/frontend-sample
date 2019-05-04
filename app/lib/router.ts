@@ -1,10 +1,9 @@
-
 /*
  - extractPath(path)
 
 This method handles only samples hash paths.
 It returns an object that are not well defined.
-It should not be use in production environment.
+It should not be used in production environment.
 
 - Cases that are specifically handled:
 
@@ -25,33 +24,32 @@ case 7: #users/:id/user (invalid)
 
 export const extractPath = path => {
   if (path) {
-    // for case root
+    // case root
     if (path == '#/') {
       return { view: path };
     }
 
-    // for case 1
+    // case 1
     const [view, id, ...trash] = path.split('/');
 
     if (id) {
       return { view: view, id: id };
     }
 
-    // for case 2
-    const [view_w_qrys, querys] = view.split('?');
+    // case 2
+    const [viewWithoutQuerys, querys] = view.split('?');
 
     if (querys) {
       const [query, ...remaining] = querys.split('&');
       const [key, value, ...trash] = query.split('=');
 
       if (key && value) {
-        return { view: view_w_qrys, key: key, value: value };
+        return { view: viewWithoutQuerys, key: key, value: value };
       }
     }
 
-    // solve case 0
-    return { view: view_w_qrys };
-
+    // case 0
+    return { view: viewWithoutQuerys };
   }
-  throw new Error("Invalid URL");
-}
+  throw new Error('Invalid URL');
+};

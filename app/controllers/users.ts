@@ -1,97 +1,25 @@
 import * as User from '../model/user.ts';
 import { render, redirectTo } from '../lib/render.ts';
-//import * as Fixtures from '../test/fixtures.ts';
 import { showAlert, startLoaderBar, stopLoaderBar } from '../lib/utils.ts';
 import { hasSession, getSessionToken, setSessionToken, deleteSession } from '../lib/session.ts';
 
-// page login
-export const login = async () => {
-  try {
-    if (!await hasSession()) {
-      session();
-    } else {
-      redirectTo('users');
-    }
-  } catch (err) {
-    throw err;
-  }
-};
-
-// logout
-export const logout = async () => {
-  try {
-    if (await hasSession()) {
-      startLoaderBar();
-      await User.logout(await getSessionToken());
-      stopLoaderBar();
-
-      await deleteSession();
-
-      redirectTo('login');
-    }
-  } catch (err) {
-    throw err;
-  }
-};
-
-// page index
-export const index = async (page = '1') => {
-  try {
-    if (!await hasSession()) {
-      redirectTo('login');
-    } else {
-      startLoaderBar();
-      const users = await User.find_by_page(page, await getSessionToken());
-      stopLoaderBar();
-
-      //const users = Fixtures.users();
-      listUsers(users);
-    }
-  } catch (err) {
-    throw err;
-  }
-};
-
-// page edit
-export const edit = async (id) => {
-  try {
-    if (!await hasSession()) {
-      redirectTo('login');
-    } else {
-      startLoaderBar();
-      const user = await User.find_by_id(id, await getSessionToken());
-      stopLoaderBar();
-
-      //const user = Fixtures.user();
-      editUser(user);
-    }
-  } catch (err) {
-    throw err;
-  }
-};
-
-// user session
-export const session = () => {
+const session = () => {
   const mainElement = document.body.querySelector('.app-main');
   mainElement.innerHTML = render('users', 'login', {});
 
   const form = mainElement.querySelector('form');
-  form.addEventListener('submit', async (event) => {
+  form.addEventListener('submit', async event => {
     try {
       event.preventDefault();
-      const login = (<HTMLInputElement> form
-        .querySelector('#user_login'))
-        .value;
 
-      const password = (<HTMLInputElement> form
-        .querySelector('#user_password'))
-        .value;
+      const login = (form.querySelector('#user_login') as HTMLInputElement).value;
+      const password = (form.querySelector('#user_password') as HTMLInputElement).value;
 
       startLoaderBar();
       const resp = await User.login(login, password);
       await setSessionToken(resp.token);
-      //const resp = Fixtures.token();
       stopLoaderBar();
+
       redirectTo('users');
     } catch (err) {
       stopLoaderBar();
@@ -101,11 +29,9 @@ export const session = () => {
   });
 };
 
-// list users
-export const listUsers = users => {
+const listUsers = users => {
   const mainElement = document.body.querySelector('.app-main');
-  mainElement.innerHTML =
-    render('users', 'list', {users: users, url: "#users?page="});
+  mainElement.innerHTML = render('users', 'list', { users: users, url: '#users?page=' });
 
   // add editar event on buttons
   const editButtons = mainElement.querySelectorAll('button.edit');
@@ -113,7 +39,7 @@ export const listUsers = users => {
     const editButton = editButtons[i];
     editButton.addEventListener('click', event => {
       const id = editButton.getAttribute('data-user');
-      redirectTo(`users/${id}`);
+      redirectTo('users/' + id);
     });
   }
 
@@ -121,21 +47,16 @@ export const listUsers = users => {
   const deleteButtons = mainElement.querySelectorAll('button.delete');
   for (let i = 0; i < deleteButtons.length; i++) {
     const deleteButton = deleteButtons[i];
-    deleteButton.addEventListener('click', async (event) => {
+    deleteButton.addEventListener('click', async event => {
       try {
         const id = deleteButton.getAttribute('data-user');
 
         startLoaderBar();
-        const resp = await User.delete_by_id(id, await getSessionToken());
+        await User.deleteById(id, await getSessionToken());
         stopLoaderBar();
 
-        const containerUser =
-          (<HTMLInputElement> deleteButton).parentNode
-            .parentNode;
-
-        const parent =
-          (<HTMLInputElement> containerUser).parentNode;
-
+        const containerUser = (deleteButton as HTMLInputElement).parentNode.parentNode;
+        const parent = (containerUser as HTMLInputElement).parentNode;
         parent.removeChild(containerUser);
 
         showAlert('Operação concluida com sucesso', 'success');
@@ -148,39 +69,93 @@ export const listUsers = users => {
   }
 };
 
-// edit user
-export const editUser = user => {
-  const mainElement =
-    document.body.querySelector('.app-main');
-
-  mainElement.innerHTML =
-    render('users', 'edit', {user: user});
+const editUser = user => {
+  const mainElement = document.body.querySelector('.app-main');
+  mainElement.innerHTML = render('users', 'edit', { user: user });
 
   const form = mainElement.querySelector('form');
-  form.addEventListener('submit', async (event) => {
+  form.addEventListener('submit', async event => {
     try {
       event.preventDefault();
 
-      const user_id = (<HTMLInputElement> form
-        .querySelector('#user_id'))
-        .value;
-      const user_nome = (<HTMLInputElement> form
-        .querySelector('#user_nome'))
-        .value;
-      const user_sobrenome = (<HTMLInputElement> form
-        .querySelector('#user_sobrenome'))
-        .value;
+      const userId = (form.querySelector('#user_id') as HTMLInputElement).value;
+      const userNome = (form.querySelector('#user_nome') as HTMLInputElement).value;
+      const userSobrenome = (form.querySelector('#user_sobrenome') as HTMLInputElement).value;
 
       startLoaderBar();
-      const resp = await User.update(user_id, user_nome, user_sobrenome, await getSessionToken());
+      await User.update(userId, userNome, userSobrenome, await getSessionToken());
       stopLoaderBar();
 
       showAlert('Operação concluida com sucesso', 'success');
-
     } catch (err) {
       stopLoaderBar();
       showAlert('Falha na operação');
       console.log(err);
     }
   });
+};
+
+/*
+  ==================
+  Controller's pages
+  ==================
+*/
+
+export const login = async () => {
+  try {
+    if (!(await hasSession())) {
+      session();
+    } else {
+      redirectTo('users');
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const logout = async () => {
+  try {
+    if (await hasSession()) {
+      startLoaderBar();
+      await User.logout(await getSessionToken());
+      await deleteSession();
+      stopLoaderBar();
+
+      redirectTo('login');
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const users = async (page = '1') => {
+  try {
+    if (!(await hasSession())) {
+      redirectTo('login');
+    } else {
+      startLoaderBar();
+      const users = await User.findByPage(page, await getSessionToken());
+      stopLoaderBar();
+
+      listUsers(users);
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const edit = async id => {
+  try {
+    if (!(await hasSession())) {
+      redirectTo('login');
+    } else {
+      startLoaderBar();
+      const user = await User.findById(id, await getSessionToken());
+      stopLoaderBar();
+
+      editUser(user);
+    }
+  } catch (err) {
+    throw err;
+  }
 };

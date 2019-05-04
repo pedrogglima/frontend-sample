@@ -1,30 +1,26 @@
 import * as Users from '../templates/users.ts';
 import * as Shared from '../templates/shared.ts';
 
-export const redirectTo = (path) => {
-  return window.location.hash = "#" + path;
-}
+export const redirectTo = path => {
+  return (window.location.hash = '#' + path);
+};
 
 export const render = (template, method, params) => {
-
   switch (template) {
     case 'users':
       if (method === 'login') {
         return Users.login();
-
       } else if (method == 'list') {
         // (missing) validate arguments from params
         const users = params.users.data;
-        const total_pages = params.users.total_pages;
+        const totalPages = params.users.total_pages;
         const url = params.url;
 
-        return Users.list({users, total_pages, url});
-
-      } else if (method == 'edit'){
+        return Users.list({ users, totalPages, url });
+      } else if (method == 'edit') {
         // (missing) validate arguments from params
         const user = params.user.data;
-        return Users.edit({user});
-
+        return Users.edit({ user });
       } else {
         // (missing) throw error
         console.log('argument method do not exist');
@@ -35,20 +31,16 @@ export const render = (template, method, params) => {
       if (method === 'main') {
         // (missing) validate arguments from params
         const userAuth = params.userAuth;
-        return Shared.main({userAuth});
-
+        return Shared.main({ userAuth });
       } else if (method == 'alert') {
         // (missing) validate arguments from params
         const type = params.type;
         const message = params.message;
-        return Shared.alert({type, message});
-
-      } else if (method == '404'){
+        return Shared.alert({ type, message });
+      } else if (method == '404') {
         return Shared.notFound();
-
-      } else if (method == 'loader'){
+      } else if (method == 'loader') {
         return Shared.loading();
-
       } else {
         // (missing) throw error
         console.log('argument method do not exist');
