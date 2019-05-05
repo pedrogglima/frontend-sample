@@ -1,14 +1,4 @@
-import { fetchJSON, fetchTXT } from '../lib/utils.ts';
-
-interface UserArguments {
-  userId?: number;
-  userLogin?: string;
-  userPassword?: string;
-  userFirstName?: string;
-  userLastName?: string;
-  userUrlAvatar?: string;
-  userToken?: string;
-}
+import { fetchJSON, fetchTXT } from '../lib/request.ts';
 
 interface UsersArguments {
   userPage: number;
@@ -34,7 +24,20 @@ class Users {
   }
 }
 
+interface UserArguments {
+  userId?: number;
+  userLogin?: string;
+  userPassword?: string;
+  userFirstName?: string;
+  userLastName?: string;
+  userUrlAvatar?: string;
+  userToken?: string;
+}
+
 export class User {
+  public static urlApi: string = 'https://reqres.in/api';
+  public static delayApi: string = 'delay=2';
+
   public id: number;
   public login: string;
   public password: string;
@@ -55,20 +58,15 @@ export class User {
 
   public static async login(email, password): Promise<User> {
     try {
-      const url = 'https://reqres.in/api/login?delay=2';
-      const resqBody = JSON.stringify({
-        email: email,
-        password: password,
-      });
-
-      const resp = await fetchJSON(url, {
-        method: 'POST',
-        headers: new Headers({
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        }),
-        body: resqBody,
-      });
+      const url = this.urlApi + '/login?' + this.delayApi;
+      const resp = await fetchJSON(
+        url,
+        'POST',
+        JSON.stringify({
+          email: email,
+          password: password,
+        })
+      );
 
       return new User({
         userLogin: email,
@@ -80,29 +78,19 @@ export class User {
     }
   }
 
-  public static async logout(token): Promise<void> {
+  public static async logout(): Promise<void> {
     try {
-      const url = 'https://reqres.in/api/logout?delay=2';
-      await fetchJSON(url, {
-        method: 'POST',
-        headers: new Headers({
-          Authorization: 'Bearer ' + token,
-        }),
-      });
+      const url = this.urlApi + '/logout?' + this.delayApi;
+      await fetchJSON(url, 'POST');
     } catch (err) {
       throw err;
     }
   }
 
-  public static async findByPage(pageNumber: string = '1', token): Promise<Users> {
+  public static async findByPage(pageNumber: string = '1'): Promise<Users> {
     try {
-      const url = `https://reqres.in/api/users?page=${pageNumber}&delay=2`;
-      const resp = await fetchJSON(url, {
-        method: 'GET',
-        headers: new Headers({
-          Authorization: 'Bearer ' + token,
-        }),
-      });
+      const url = this.urlApi + `/users?page=${pageNumber}&` + this.delayApi;
+      const resp = await fetchJSON(url);
 
       const userList = [];
       for (let i = 0; i < resp.data.length; i++) {
@@ -129,15 +117,10 @@ export class User {
     }
   }
 
-  public static async findById(id, token): Promise<User> {
+  public static async findById(id): Promise<User> {
     try {
-      const url = `https://reqres.in/api/users/${id}?delay=2`;
-      const resp = await fetchJSON(url, {
-        method: 'GET',
-        headers: new Headers({
-          Authorization: 'Bearer ' + token,
-        }),
-      });
+      const url = this.urlApi + `/users/${id}?` + this.delayApi;
+      const resp = await fetchJSON(url);
 
       return new User({
         userId: resp.data.id,
@@ -150,42 +133,28 @@ export class User {
     }
   }
 
-  public static async update(id, nome, sobrenome, token): Promise<void> {
+  public static async update(id, nome, sobrenome): Promise<void> {
     try {
-      const url = `https://reqres.in/api/users/${id}?delay=2`;
-      const resqBody = JSON.stringify({
-        first_name: nome,
-        last_name: sobrenome,
-      });
-      await fetchJSON(url, {
-        method: 'PUT',
-        headers: new Headers({
-          Authorization: 'Bearer ' + token,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        }),
-        body: resqBody,
-      });
+      const url = this.urlApi + `/users/${id}?` + this.delayApi;
+      await fetchJSON(
+        url,
+        'PUT',
+        JSON.stringify({
+          first_name: nome,
+          last_name: sobrenome,
+        })
+      );
     } catch (err) {
       throw err;
     }
   }
 
-  public static async deleteById(id, token): Promise<void> {
+  public static async deleteById(id): Promise<void> {
     try {
-      const url = `https://reqres.in/api/users/${id}?delay=2`;
-      await fetchTXT(url, {
-        method: 'DELETE',
-        headers: new Headers({
-          Authorization: 'Bearer ' + token,
-        }),
-      });
+      const url = this.urlApi + `/users/${id}?` + this.delayApi;
+      await fetchTXT(url, { method: 'DELETE' });
     } catch (err) {
       throw err;
     }
-  }
-
-  public getToken(): string {
-    return this.token;
   }
 }

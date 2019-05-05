@@ -44,7 +44,7 @@ export const deleteSession = async (): Promise<void> => {
 export const hasSession = async (): Promise<boolean> => {
   try {
     const token = await getSessionToken();
-    if (token === null) {
+    if (token === '') {
       return false;
     }
     return true;

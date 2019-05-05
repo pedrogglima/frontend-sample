@@ -22,7 +22,7 @@ case 7: #users/:id/user (invalid)
 
 */
 
-export const extractPath = path => {
+export const extractPath = async path => {
   if (path) {
     // case root
     if (path == '#/') {

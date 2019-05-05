@@ -17,7 +17,7 @@ const session = () => {
 
       startLoaderBar();
       const user = await User.login(login, password);
-      await setSessionToken(user.getToken());
+      await setSessionToken(user.token);
       stopLoaderBar();
 
       redirectTo('users');
@@ -52,7 +52,7 @@ const listUsers = users => {
         const id = deleteButton.getAttribute('data-user');
 
         startLoaderBar();
-        await User.deleteById(id, await getSessionToken());
+        await User.deleteById(id);
         stopLoaderBar();
 
         const containerUser = (deleteButton as HTMLInputElement).parentNode.parentNode;
@@ -83,7 +83,7 @@ const editUser = user => {
       const userSobrenome = (form.querySelector('#user_sobrenome') as HTMLInputElement).value;
 
       startLoaderBar();
-      await User.update(userId, userNome, userSobrenome, await getSessionToken());
+      await User.update(userId, userNome, userSobrenome);
       stopLoaderBar();
 
       showAlert('Operação concluida com sucesso', 'success');
@@ -117,7 +117,7 @@ export const logout = async () => {
   try {
     if (await hasSession()) {
       startLoaderBar();
-      await User.logout(await getSessionToken());
+      await User.logout();
       await deleteSession();
       stopLoaderBar();
 
@@ -134,7 +134,7 @@ export const users = async (page = '1') => {
       redirectTo('login');
     } else {
       startLoaderBar();
-      const users = await User.findByPage(page, await getSessionToken());
+      const users = await User.findByPage(page);
       stopLoaderBar();
 
       listUsers(users);
@@ -150,7 +150,7 @@ export const edit = async id => {
       redirectTo('login');
     } else {
       startLoaderBar();
-      const user = await User.findById(id, await getSessionToken());
+      const user = await User.findById(id);
       stopLoaderBar();
 
       editUser(user);

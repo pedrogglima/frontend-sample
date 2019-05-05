@@ -16,7 +16,7 @@ const showView = async () => {
     document.body.innerHTML = render('shared', 'main', {
       userAuth: await hasSession(),
     });
-    const objPath = extractPath(window.location.hash);
+    const objPath = await extractPath(window.location.hash);
 
     switch (objPath.view) {
       case '#/':

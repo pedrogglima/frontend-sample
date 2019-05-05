@@ -12,7 +12,7 @@ export const render = (template, method, params) => {
         return Users.login();
       } else if (method == 'list') {
         // (missing) validate arguments from params
-        const users = (params.users.list);
+        const users = params.users.list;
         const totalPages = params.users.totalPages;
         const url = params.url;
 
