@@ -61,8 +61,8 @@ export const list = Handlebars.compile(`
                 <hr class="w-100"/>
                 <div class="col">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item pb-1 pt-2 border-0"><b>{{last_name}}</b></li>
-                    <li class="list-group-item py-1 border-0"><b><small>{{first_name}}</small></b></li>
+                    <li class="list-group-item pb-1 pt-2 border-0"><b>{{lastName}}</b></li>
+                    <li class="list-group-item py-1 border-0"><b><small>{{firstName}}</small></b></li>
                   </ul>
                 </div>
                 <div class="btn-group">
@@ -109,11 +109,11 @@ export const edit = Handlebars.compile(`
               <input type="hidden" id="user_id" name="userId" value="{{user.id}}">
               <div class="form-group">
                 <label for="nome">Nome</label>
-                <input type="text" id="user_nome" class="form-control" value="{{user.first_name}}">
+                <input type="text" id="user_nome" class="form-control" value="{{user.firstName}}">
               </div>
               <div class="form-group">
                 <label for="sobrenome">Sobrenome</label>
-                <input type="text" id="user_sobrenome" class="form-control" value="{{user.last_name}}">
+                <input type="text" id="user_sobrenome" class="form-control" value="{{user.lastName}}">
               </div>
               <button type="submit" class="btn btn-success btn-md btn-block">Salvar</button>
             </form>

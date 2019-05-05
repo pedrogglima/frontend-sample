@@ -1,4 +1,4 @@
-import * as User from '../model/user.ts';
+import { User } from '../model/user.ts';
 import { render, redirectTo } from '../lib/render.ts';
 import { showAlert, startLoaderBar, stopLoaderBar } from '../lib/utils.ts';
 import { hasSession, getSessionToken, setSessionToken, deleteSession } from '../lib/session.ts';
@@ -16,8 +16,8 @@ const session = () => {
       const password = (form.querySelector('#user_password') as HTMLInputElement).value;
 
       startLoaderBar();
-      const resp = await User.login(login, password);
-      await setSessionToken(resp.token);
+      const user = await User.login(login, password);
+      await setSessionToken(user.getToken());
       stopLoaderBar();
 
       redirectTo('users');

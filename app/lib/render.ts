@@ -12,14 +12,14 @@ export const render = (template, method, params) => {
         return Users.login();
       } else if (method == 'list') {
         // (missing) validate arguments from params
-        const users = params.users.data;
-        const totalPages = params.users.total_pages;
+        const users = (params.users.list);
+        const totalPages = params.users.totalPages;
         const url = params.url;
 
         return Users.list({ users, totalPages, url });
       } else if (method == 'edit') {
         // (missing) validate arguments from params
-        const user = params.user.data;
+        const user = params.user;
         return Users.edit({ user });
       } else {
         // (missing) throw error

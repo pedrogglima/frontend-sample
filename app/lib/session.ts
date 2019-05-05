@@ -1,12 +1,15 @@
-export const setSessionToken = async value => {
+export const setSessionToken = async (value: string): Promise<void> => {
   try {
+    if (value === '') {
+      throw new Error('Error empty string at setSessionToken');
+    }
     document.cookie = `Token=${value};`;
   } catch (err) {
     throw new Error('Error while setting cookie: ' + err);
   }
 };
 
-export const getSessionToken = async () => {
+export const getSessionToken = async (): Promise<string> => {
   try {
     const keyname = 'Token=';
     const decodedCookie = decodeURIComponent(document.cookie);
@@ -21,13 +24,13 @@ export const getSessionToken = async () => {
         return cookie.substring(keyname.length, cookie.length);
       }
     }
-    return null;
+    return '';
   } catch (err) {
     throw new Error('Error while getting cookie: ' + err);
   }
 };
 
-export const deleteSession = async () => {
+export const deleteSession = async (): Promise<void> => {
   try {
     const cookie = await getSessionToken();
     if (cookie !== null) {
@@ -38,7 +41,7 @@ export const deleteSession = async () => {
   }
 };
 
-export const hasSession = async () => {
+export const hasSession = async (): Promise<boolean> => {
   try {
     const token = await getSessionToken();
     if (token === null) {
