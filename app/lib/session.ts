@@ -1,4 +1,4 @@
-export const setSessionToken = async (value: string): Promise<void> => {
+export const setSessionToken = async value => {
   try {
     if (value === '') {
       throw new Error('Error empty string at setSessionToken');
@@ -9,7 +9,7 @@ export const setSessionToken = async (value: string): Promise<void> => {
   }
 };
 
-export const getSessionToken = async (): Promise<string> => {
+export const getSessionToken = async () => {
   try {
     const keyname = 'Token=';
     const decodedCookie = decodeURIComponent(document.cookie);
@@ -30,7 +30,7 @@ export const getSessionToken = async (): Promise<string> => {
   }
 };
 
-export const deleteSession = async (): Promise<void> => {
+export const deleteSession = async () => {
   try {
     const cookie = await getSessionToken();
     if (cookie !== null) {
@@ -41,7 +41,7 @@ export const deleteSession = async (): Promise<void> => {
   }
 };
 
-export const hasSession = async (): Promise<boolean> => {
+export const hasSession = async () => {
   try {
     const token = await getSessionToken();
     if (token === '') {

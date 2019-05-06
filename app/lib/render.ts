@@ -23,7 +23,7 @@ export const render = (template, method, params) => {
         return Users.edit({ user });
       } else {
         // (missing) throw error
-        console.log('argument method do not exist');
+        console.log('(render) argument method not found');
       }
       break;
 
@@ -43,12 +43,12 @@ export const render = (template, method, params) => {
         return Shared.loading();
       } else {
         // (missing) throw error
-        console.log('argument method do not exist');
+        console.log('(render) argument method not found');
       }
       break;
 
     default:
       // (missing) throw error
-      console.log('argument template do not found');
+      console.log('(render) argument template not found');
   }
 };

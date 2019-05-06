@@ -97,7 +97,7 @@ const editUser = user => {
 
 /*
   ==================
-  Controller's pages
+  Controller's action
   ==================
 */
 

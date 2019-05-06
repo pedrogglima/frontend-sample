@@ -56,7 +56,7 @@ export class User {
     this.token = (obj && obj.userToken) || '';
   }
 
-  public static async login(email, password): Promise<User> {
+  public static async login(email, password) {
     try {
       const url = this.urlApi + '/login?' + this.delayApi;
       const resp = await fetchJSON(
@@ -78,7 +78,7 @@ export class User {
     }
   }
 
-  public static async logout(): Promise<void> {
+  public static async logout() {
     try {
       const url = this.urlApi + '/logout?' + this.delayApi;
       await fetchJSON(url, 'POST');
@@ -87,7 +87,7 @@ export class User {
     }
   }
 
-  public static async findByPage(pageNumber: string = '1'): Promise<Users> {
+  public static async findByPage(pageNumber = '1'): Promise<Users> {
     try {
       const url = this.urlApi + `/users?page=${pageNumber}&` + this.delayApi;
       const resp = await fetchJSON(url);
@@ -133,7 +133,7 @@ export class User {
     }
   }
 
-  public static async update(id, nome, sobrenome): Promise<void> {
+  public static async update(id, nome, sobrenome) {
     try {
       const url = this.urlApi + `/users/${id}?` + this.delayApi;
       await fetchJSON(
@@ -149,10 +149,10 @@ export class User {
     }
   }
 
-  public static async deleteById(id): Promise<void> {
+  public static async deleteById(id) {
     try {
       const url = this.urlApi + `/users/${id}?` + this.delayApi;
-      await fetchTXT(url, { method: 'DELETE' });
+      await fetchTXT(url);
     } catch (err) {
       throw err;
     }

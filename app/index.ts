@@ -1,6 +1,3 @@
-// o que falta fazer nessa pagina
-// - remover imports from style (boostrap)
-// - terminar CSS in pages
 import 'bootstrap';
 import './assets/app.css';
 import * as UsersController from './controllers/users.ts';

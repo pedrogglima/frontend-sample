@@ -28,10 +28,17 @@ export const fetchJSON = async (url, method = 'GET', body = '') => {
   }
 };
 
-// Used for request API DELETE (response's JSON broken)
-export const fetchTXT = async (url, args) => {
+// fix bug: Used for request API DELETE (response's JSON broken)
+export const fetchTXT = async (url, method = 'DELETE') => {
   try {
-    const response = await fetch(url, args);
+    const header = new Headers();
+
+    if (await hasSession()) {
+      header.append('Authorization', 'Bearer ' + (await getSessionToken()));
+    }
+
+    const response = await fetch(url, { method: method, headers: header });
+
     if (!response.ok) {
       throw new Error('HTTP status ' + response.status);
     }
