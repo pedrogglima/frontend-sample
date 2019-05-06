@@ -7,7 +7,8 @@ It should not be used in production environment.
 
 - Cases that are specifically handled:
 
-case root: #/ (valid)
+case root 1: URL:PORT (valid)
+case root 2: #/ (valid)
 case 0: #users (valid)
 case 1: #users/:id (valid)
 case 2: #users?page=foo (valid)
@@ -23,9 +24,10 @@ case 7: #users/:id/user (invalid)
 */
 
 export const extractPath = async path => {
+  const root_path = '#/';
   if (path) {
-    // case root
-    if (path == '#/') {
+    // case root 2
+    if (path == root_path) {
       return { view: path };
     }
 
@@ -51,5 +53,6 @@ export const extractPath = async path => {
     // case 0
     return { view: viewWithoutQuerys };
   }
-  throw new Error('Invalid URL');
+  // case root 1
+  return { view: root_path };
 };
