@@ -1,0 +1,39 @@
+@import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+/*******************/
+/* templates/shared */
+/*******************/
+.loading-bar {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: visible;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: transparent;
+}
+
+.loading-bar-border-size {
+  width: 3rem;
+  height: 3rem;
+}
+
+.not-found-container {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.not-found-message {
+  margin-left: 0.8em;
+  font-size: 1.0em;
+}
+
+/*******************/
+/* templates/users */
+/*******************/

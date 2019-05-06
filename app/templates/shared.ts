@@ -31,18 +31,10 @@ export const main = Handlebars.compile(`
 `);
 
 export const notFound = Handlebars.compile(`
-  <div style="
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  ">
+  <div class="not-found-container">
     <div>
       <h1>ERROR 404</h1>
-      <span style="
-        margin-left: 0.8em;
-        font-size: 1.0em;
-      ">
+      <span class="not-found-message">
         A página que você procura não foi encontrada, <a href="#/">voltar.</a>
       </span>
       </p>
@@ -51,20 +43,8 @@ export const notFound = Handlebars.compile(`
 `);
 
 export const loading = Handlebars.compile(`
-  <div style="
-    position: fixed;
-    z-index: 999;
-    height: 2em;
-    width: 2em;
-    overflow: visible;
-    margin: auto;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: transparent;
-  ">
-    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+  <div class="loading-bar">
+    <div class="spinner-border loading-bar-border-size" role="status">
       <span class="sr-only">Loading...</span>
     </div>
   </div>
