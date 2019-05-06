@@ -2,6 +2,8 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const CompressionPlugin = require('compression-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const distDir = path.resolve(__dirname, 'dist');
@@ -9,7 +11,7 @@ const distDir = path.resolve(__dirname, 'dist');
 module.exports = {
   entry: './app/index.ts',
   output: {
-    filename: 'bundle.js',
+    filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
   },
   devServer: {
@@ -30,15 +32,22 @@ module.exports = {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
         loader: 'url-loader?limit=100000',
       },
+      {
+       test: /favicon\.png$/,
+       use: 'file-loader?name=[name].[ext]',
+     },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Módulo front-end',
+      title: 'rontend',
+      favicon: 'app/assets/images/favicon-16x16.png'
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
     }),
+    new BundleAnalyzerPlugin(),
+    new CompressionPlugin()
   ],
 };
