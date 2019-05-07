@@ -7,9 +7,14 @@ Handlebars.registerHelper('paginator', (from, to, url, block) => {
 
   for (let i = from; i <= to; ++i) {
     pageNumber = block.fn(i).trim();
-    accum += ['<li class="page-item"><a class="page-link" href="', url, pageNumber, '">', pageNumber, '</a></li>'].join(
-      ''
-    );
+    accum += [
+      '<li class="page-item"><a class="page-link" href="',
+      url,
+      pageNumber,
+      '&delay=2">',
+      pageNumber,
+      '</a></li>',
+    ].join('');
   }
   return accum;
 });
@@ -24,15 +29,17 @@ export const login = Handlebars.compile(`
             Área de acesso
           </div>
           <div class="card-body">
-
             <form>
               <div class="form-group">
+
                 <label for="login">Login</label>
                 <input type="text" id="user_login" class="form-control" placeholder="Digite seu login">
+                <small>(para acessar: eve.holt@reqres.in)</small>
               </div>
               <div class="form-group">
                 <label for="senha">Senha</label>
                 <input type="password" id="user_password" class="form-control" placeholder="Digite sua senha">
+                <small>(senha: &lt;qualquer coisa&gt;)</small>
               </div>
               <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input">
@@ -59,6 +66,9 @@ export const list = Handlebars.compile(`
             {{#each users}}
               <div class="row" id="row-{{id}}">
                 <hr class="w-100"/>
+                <div class="user-avatar">
+                  <img class="img-fluid rounded-circle" src="{{urlAvatar}}" alt="Avatar Usuário" width="60" height="60">
+                </div>
                 <div class="col">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item pb-1 pt-2 border-0"><b>{{lastName}}</b></li>

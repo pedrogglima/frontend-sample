@@ -24,10 +24,10 @@ case 7: #users/:id/user (invalid)
 */
 
 export const extractPath = async path => {
-  const root_path = '#/';
+  const rootPath = '#/';
   if (path) {
     // case root 2
-    if (path == root_path) {
+    if (path == rootPath) {
       return { view: path };
     }
 
@@ -54,5 +54,5 @@ export const extractPath = async path => {
     return { view: viewWithoutQuerys };
   }
   // case root 1
-  return { view: root_path };
+  return { view: rootPath };
 };

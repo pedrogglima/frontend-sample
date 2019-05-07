@@ -13,7 +13,7 @@ export const main = Handlebars.compile(`
             </div>
             {{#if userAuth}}
               <ul class="nav list-inline">
-                <li class="list-inline-item pr-2 border-right"><a href="#users">Usuários</a></li>
+                <li class="list-inline-item pr-2 border-right"><a href="#users?delay=2">Usuários</a></li>
                 <li class="list-inline-item"><a href="#logout">Sair</a></li>
               </ul>
             {{/if}}
@@ -23,6 +23,7 @@ export const main = Handlebars.compile(`
     </header>
 
     <div class="container">
+      <div class="app-overlay"></div>
       <div class="app-loading"></div>
       <div class="app-alerts"></div>
       <div class="app-main mt-5"></div>
