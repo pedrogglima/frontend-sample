@@ -47,7 +47,7 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(), // uncomment for using plugin
     new CompressionPlugin()
   ],
 };

@@ -6,6 +6,7 @@
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore 'app/**' --fix",
     "prod": "node server.js",
+    "dev": "webpack",
     "heroku-postbuild": "webpack -p --config ./webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
