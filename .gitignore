@@ -37,8 +37,8 @@ Thumbs.db
 # NPM/Node projects #
 #####################
 node_modules/
+dist/
 build
-npm-debug.log
 .env
 .eslintrc.json
 .prettierrc.json
