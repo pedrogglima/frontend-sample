@@ -83,7 +83,7 @@ export class User {
       const url = this.urlApi + '/logout?' + this.delayApi;
       await fetchJSON(url, 'POST');
     } catch (err) {
-      throw err;
+      console.log(new Error('while loging out user: ' + err));
     }
   }
 

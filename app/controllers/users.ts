@@ -109,7 +109,9 @@ export const login = async () => {
       redirectTo('users');
     }
   } catch (err) {
-    throw err;
+    stopLoaderBar();
+    showAlert('Falha na operação');
+    console.log(err);
   }
 };
 
@@ -117,14 +119,16 @@ export const logout = async () => {
   try {
     if (await hasSession()) {
       startLoaderBar();
-      await User.logout();
+      User.logout();
       await deleteSession();
       stopLoaderBar();
 
       redirectTo('login');
     }
   } catch (err) {
-    throw err;
+    stopLoaderBar();
+    showAlert('Falha na operação');
+    console.log(err);
   }
 };
 
@@ -140,7 +144,9 @@ export const users = async (page = '1') => {
       listUsers(users);
     }
   } catch (err) {
-    throw err;
+    stopLoaderBar();
+    showAlert('Falha na operação');
+    console.log(err);
   }
 };
 
@@ -156,6 +162,8 @@ export const edit = async id => {
       editUser(user);
     }
   } catch (err) {
-    throw err;
+    stopLoaderBar();
+    showAlert('Falha na operação');
+    console.log(err);
   }
 };

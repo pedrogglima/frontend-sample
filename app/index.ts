@@ -24,19 +24,15 @@ const showView = async () => {
         UsersController.logout();
         break;
       case '#users':
-        try {
-          // edit user || list users
-          if (objPath.id) {
-            UsersController.edit(objPath.id);
+        // edit user || list users
+        if (objPath.id) {
+          UsersController.edit(objPath.id);
+        } else {
+          if (objPath.key && objPath.key == 'page' && objPath.value) {
+            UsersController.users(objPath.value);
           } else {
-            if (objPath.key && objPath.key == 'page' && objPath.value) {
-              UsersController.users(objPath.value);
-            } else {
-              UsersController.users();
-            }
+            UsersController.users();
           }
-        } catch (err) {
-          throw err;
         }
         break;
       default:

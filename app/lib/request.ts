@@ -25,7 +25,7 @@ export const fetchJSON = async (url, method = 'GET', body = '') => {
     }
     return await response.json();
   } catch (err) {
-    throw new Error('(fetchJSON) ' + err);
+    throw err;
   }
 };
 
@@ -41,10 +41,11 @@ export const fetchTXT = async (url, method = 'DELETE') => {
     const response = await fetch(url, { method: method, headers: header });
 
     if (!response.ok) {
-      throw new Error('HTTP status ' + response.status);
+      const respBody = await response.json();
+      throw new Error('status: ' + response.status + ', message: ' + respBody.error);
     }
     return await response.text();
   } catch (err) {
-    throw new Error('(fetchTXT) ' + err);
+    throw err;
   }
 };
