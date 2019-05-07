@@ -20,7 +20,8 @@ export const fetchJSON = async (url, method = 'GET', body = '') => {
     }
 
     if (!response.ok) {
-      throw new Error('HTTP status ' + response.status);
+      const respBody = await response.json();
+      throw new Error('status: ' + response.status + ', message: ' + respBody.error);
     }
     return await response.json();
   } catch (err) {
