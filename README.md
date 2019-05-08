@@ -1,7 +1,7 @@
 Frontend
 ========
 
-Simple Authentication & CRUD webpage for frontend job's interview. The project was build with HTML, CSS and [Typescript](https://www.typescriptlang.org/) and bundle with the help of [Webpack](https://webpack.js.org/). The project makes use of the API https://reqres.in/ to render fake data on the webpage. You can find more information about the API on their page.
+Simple Authentication & CRUD webpage for frontend job's interview. The project was manly build with HTML, [Bootstrap](https://getbootstrap.com/) and [Typescript](https://www.typescriptlang.org/), and bundle with the help of [Webpack](https://webpack.js.org/). The project makes use of the API https://reqres.in/ to render fake data on the webpage. You can find more information about the API on their page.
 
 ## How to use
 
@@ -49,4 +49,4 @@ npm run start:exp
 ```
 ## Licenses and Copyright
 
-Copyright (C) 2018 Pedro Gabriel Lima.  
+Copyright (C) 2019 Pedro Gabriel Lima.  
