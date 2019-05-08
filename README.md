@@ -40,8 +40,13 @@ npm run start:exp
 
 # If on your console it shows the message "Ready", then the server is up running
 # and you can access the app on localhost:8080
-```
 
+# P.s - I had trouble with Firefox CORS (Cross Origin Request Security) policy while
+# running the app local due to requests made by the app to the API.
+# One option is disable this policy on Firefox;
+# A second option would be run the app on Chrome.
+
+```
 ## Licenses and Copyright
 
 Copyright (C) 2018 Pedro Gabriel Lima.  
