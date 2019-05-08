@@ -23,7 +23,7 @@ const session = () => {
       redirectTo('users');
     } catch (err) {
       stopLoaderBar();
-      showAlert('Falha na operação');
+      showAlert('Login ou senha inválidos.');
       console.log(err);
     }
   });
@@ -62,7 +62,7 @@ const listUsers = users => {
         showAlert('Operação concluida com sucesso', 'success');
       } catch (err) {
         stopLoaderBar();
-        showAlert('Falha na operação');
+        showAlert('Não foi possível deletar o usuário');
         console.log(err);
       }
     });
@@ -89,7 +89,7 @@ const editUser = user => {
       showAlert('Operação concluida com sucesso', 'success');
     } catch (err) {
       stopLoaderBar();
-      showAlert('Falha na operação');
+      showAlert('Não foi possível editar o usuário');
       console.log(err);
     }
   });
@@ -110,7 +110,7 @@ export const login = async () => {
     }
   } catch (err) {
     stopLoaderBar();
-    showAlert('Falha na operação');
+    showAlert('Falha na operação (problema com a sessão - ver console)');
     console.log(err);
   }
 };
@@ -127,7 +127,7 @@ export const logout = async () => {
     }
   } catch (err) {
     stopLoaderBar();
-    showAlert('Falha na operação');
+    showAlert('Falha na operação (problema com a sessão - ver console)');
     console.log(err);
   }
 };
@@ -145,7 +145,9 @@ export const users = async (page = '1') => {
     }
   } catch (err) {
     stopLoaderBar();
-    showAlert('Falha na operação');
+    const notFoundUsers = { totalPages: 0, list: {} };
+    listUsers(notFoundUsers);
+    showAlert('Não foi possível listar os usuários');
     console.log(err);
   }
 };
@@ -163,7 +165,8 @@ export const edit = async id => {
     }
   } catch (err) {
     stopLoaderBar();
-    showAlert('Falha na operação');
+    redirectTo('users');
+    showAlert('Não foi possível encontrar o usuário');
     console.log(err);
   }
 };
