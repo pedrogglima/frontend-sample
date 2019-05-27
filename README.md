@@ -1,15 +1,11 @@
-Frontend
-========
+# Frontend
 
 Simple Authentication & CRUD webpage for frontend job's interview. The project was manly build with HTML, [Bootstrap](https://getbootstrap.com/) and [Typescript](https://www.typescriptlang.org/), and bundle with the help of [Webpack](https://webpack.js.org/). The project makes use of the API offered by REQ|RES to render fake data on the webpage. You can find more information about the API on their [page](https://reqres.in/).
-
-## How to use
-
-You can run the project throughout the installation process or access the link where the project has been free hosted: [Frontend](https://rocky-castle-82785.herokuapp.com/) - it may take some time (~30 seconds) to load the page in the first time because of the Host's policy for free service. It's important to highlight that the project is dependent on the API to render pages that demand data, so those pages won't work if the API is offline. You can check whether the API is offline on their [page](https://reqres.in/).
 
 ### Installation
 
 For the installation process is required to install the following programs:
+
 ```
 Node.js >= 8.10
 Npm >= 3.5.2
@@ -47,6 +43,7 @@ npm run start:exp
 # A second option would be run the app on Chrome.
 
 ```
+
 ## Licenses and Copyright
 
-Copyright (C) 2019 Pedro Gabriel Lima.  
+Copyright (C) 2019 Pedro Gabriel Lima.
