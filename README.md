@@ -1,46 +1,49 @@
 # Frontend
 
-Simple Authentication & CRUD webpage for frontend job's interview. The project was manly build with HTML, [Bootstrap](https://getbootstrap.com/) and [Typescript](https://www.typescriptlang.org/), and bundle with the help of [Webpack](https://webpack.js.org/). The project makes use of the API offered by REQ|RES to render fake data on the webpage. You can find more information about the API on their [page](https://reqres.in/).
+- Single-page app com autenticação & CRUD. 
+- Projeto ilustrativo para entrevista de emprego Frontend. 
+- O projeto foi desenvolvido com HTML, [Bootstrap](https://getbootstrap.com/) para interface visual do usuário, [Typescript](https://www.typescriptlang.org/), e [Webpack](https://webpack.js.org/) para bundler das bibliotecas e deploy da versão de produção.
+- O projeto fez uso da API oferecida pela [REQ|RES](https://reqres.in/) para consumir fake data no app. 
 
-### Installation
+### Instalação
 
-For the installation process is required to install the following programs:
+Para instalação é necessário ter instalado os seguintes programas:
 
 ```
 Node.js >= 8.10
 Npm >= 3.5.2
-(Opcional) Version Control System: git
+(Opcional) git
 ```
 
-After install the requirements:
+Próximo passo:
 
 ```
-# On your terminal
+# No terminal
 
 git clone git://github.com/pedrogglima/frontend-sample
 
-# Or in the github page on the option "Clone or Download"
+# Ou no github clique na opção "Clone or Download"
 
-# After downloading the repository, install the project's dependencies.
-# Go to inside the directory frontend-sample and run on terminal
+# Após o download do repositorio, instalar as dependencias do projeto.
+# Vá para o diretório frontend-sample e digite no terminal:
 
 npm install
 
-# After install, build the production output
+# Após instalar, digite
 
 npm run postbuild
 
-# then start the server
+# então inicialize o servidor
 
 npm run start:exp
 
-# If on your terminal it shows the message "Ready", then the server is up running
-# and you can access the app on localhost:8080
+# Se no terminal for mostrado a mensagem "Ready", então o servidor está funcionando
+# e você pode acessar localhost:8080
 
-# P.s - I had trouble with Firefox CORS (Cross Origin Request Security) policy while
-# running the app local due to requests made by the app to the API.
-# One option is disable this policy on Firefox;
-# A second option would be run the app on Chrome.
+# P.s - Firefox apresenta problemas de CORS (Cross Origin Request Security) enquanto roda o app na máquina local devido ao
+# contato entre o app e API utilizada pelo app que se encontra em outro endereço eletrônico.
+# Uma opção é desabilitar CORS no Firefox;
+# Uma segunda opção é abrir o app no Google Chrome.
 
 ```
 
